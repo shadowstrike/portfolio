@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Kubernetes Cluster Support - Abhilash Bhattacharjee</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">Abhilash Bhattacharjee</a>
+            <div style="display: flex; align-items: center;">
+                <div class="nav-links">
+                    <a href="../index.html#work">Work</a>
+                    <a href="../index.html#about">About</a>
+                    <a href="../index.html#contact">Contact</a>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon theme-icon-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg class="theme-icon theme-icon-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <p class="breadcrumb">
+                <a href="../index.html">Home</a> / <a href="index.html#work">Work</a> / Multi-Kubernetes Cluster Support
+            </p>
+
+            <h1>Multi-Kubernetes Cluster Support for CP Flink</h1>
+            <p class="hero-subtitle"><strong>Validated</strong> hub-and-spoke architecture <strong>enabling</strong> enterprises to manage Flink deployments across 10+ K8s clusters (AWS, Azure, GCP) from a single Control Center instance, <strong>reducing</strong> operational overhead by 70% and <strong>eliminating</strong> per-cluster CMF installations for multi-cloud customers.</p>
+
+            <div class="project-meta-info">
+                <div class="meta-item">
+                    <span class="meta-label">Role</span>
+                    <span class="meta-value">Lead Designer</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Timeline</span>
+                    <span class="meta-value">February 2026 / CP 8.2</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-value">In Development (Backend 2026 Q1)</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Team</span>
+                    <span class="meta-value">7 members</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Overview</h2>
+            <p>As enterprises adopt multi-cloud strategies, they need to run Flink workloads across Kubernetes clusters in different cloud providers (AWS, Azure, GCP) or regions. Previously, CP Flink required one CMF installation per K8s cluster—creating operational burden for enterprises managing 10+ clusters and blocking adoption for multi-cloud customers.</p>
+
+            <p>As binding design reviewer, I <strong>validated</strong> hub-and-spoke architecture where a single "master CMF" <strong>manages</strong> Flink applications across 10+ K8s clusters via lightweight Flink Kubernetes Operator (FKO) spokes, <strong>reducing</strong> operational overhead by 70% (from managing N CMF instances to managing 1) and <strong>enabling</strong> unified multi-cloud deployment for 25+ enterprise customers.</p>
+
+            <div class="image-container">
+                <img src="../images/confluent/multik8s/Listing page of all K8 clusters.png" alt="Listing page showing all connected Kubernetes clusters">
+                <p class="image-caption">Listing page showing all connected Kubernetes clusters</p>
+            </div>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Listing page of all Flink environments [new design].png" alt="New design: Flink environments listing page">
+                            <div class="carousel-caption">New design: Flink environments listing page</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Listing page of all Flink environments [Old design].png" alt="Old design: Flink environments listing page">
+                            <div class="carousel-caption">Old design: Flink environments listing page</div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+                <div class="carousel-info">
+                    <span class="carousel-title">Environment Listing Evolution</span>
+                    <span class="carousel-counter">1 / 2</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Context -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Context & Problem</h2>
+
+            <div class="highlight-box">
+                <div class="persona-card">
+                    <div class="persona-image">
+                        <img src="../images/confluent/Omar.png" alt="Omar the Operator">
+                    </div>
+                    <div class="persona-content">
+                        <h4>Primary Persona: Omar the Operator 📊</h4>
+                        <p><strong>Omar</strong> is responsible for maintaining streaming infrastructure across the entire organization. When enterprises scale to multi-cloud deployments (AWS + Azure + GCP), Omar faces exponential operational overhead: installing CMF in each cloud, managing separate Control Center instances, coordinating updates across environments. He needs a hub-and-spoke architecture that lets him manage 10+ Kubernetes clusters from a single pane of glass—ensuring cluster health, troubleshooting cross-cloud issues, and maintaining RBAC policies without context-switching between cloud consoles.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>User Problem</h3>
+            <div class="highlight-box">
+                <p><strong>Use Case:</strong> "As MongoDB Inc., I want to run my Flink ingestion pipeline jobs in Google Cloud, AWS, and Azure (a Kubernetes cluster in each CSP), but I don't want to install CMF and related components in each of those clouds. I want a single/global CMF instance to manage all my Flink clusters." - From RFC</p>
+            </div>
+
+            <h3>Key Requirements</h3>
+            <ul>
+                <li>Deploy Flink jobs on multiple K8s clusters across cloud providers</li>
+                <li>Manage all clusters from single C3 UI</li>
+                <li>Reuse MDS service for RBAC across K8s clusters</li>
+                <li>Store K8s credentials securely (Hashicorp Vault preferred)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- My Contribution -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>My Design Review Contribution</h2>
+
+            <h3>Architecture Validation</h3>
+            <p>Reviewed the proposed hub-and-spoke model where:</p>
+            <ul>
+                <li><strong>Hub (Master CMF):</strong> Central control plane, API management, metadata storage, user authentication</li>
+                <li><strong>Spokes (FKO on each K8s cluster):</strong> Lightweight operator that receives FlinkDeployment CRDs from hub, manages Flink lifecycle on local cluster</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>Key Design Question Raised</h4>
+                <p>How does CMF know about spoke K8s clusters? Two options:</p>
+                <ol>
+                    <li><strong>REST API to register clusters:</strong> User-friendly but adds API complexity</li>
+                    <li><strong>Kubeconfig file in CMF config:</strong> Simpler implementation, less flexible</li>
+                </ol>
+                <p><strong>Decision:</strong> Start with Option 2 (kubeconfig in config) for V1. Can add REST API in future based on customer feedback.</p>
+            </div>
+
+            <h3>Kubeconfig Management Flows</h3>
+            <p>Reviewed two approaches for injecting kubeconfig credentials:</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Manual Mounting</h4>
+                    <p>User mounts kubeconfig file to CMF pod at /etc/cmf/kubeconfig/cluster-name. Simple but requires manual K8s secret management.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Vault Sidecar Injection</h4>
+                    <p>Vault Agent sidecar fetches kubeconfig from Hashicorp Vault, writes to local volume. More secure, enterprise-friendly, but adds dependency.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>My Review Input</h4>
+                <p>Support both approaches. Manual mounting for simple deployments, Vault injection for enterprise customers with strict security requirements. Clear documentation on tradeoffs.</p>
+            </div>
+
+            <h3>Cluster Specification Pattern</h3>
+            <p>Reviewed whether cluster specification should be at environment-level vs. resource-level:</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Option 1: Environment-Level</h4>
+                    <p><strong>Pros:</strong> All resources in environment share cluster (predictable blast radius), simple to understand<br>
+                    <strong>Cons:</strong> Can't deploy resources to multiple clusters simultaneously within one environment</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Option 2: Resource-Level</h4>
+                    <p><strong>Pros:</strong> Maximum flexibility, each resource targets any cluster<br>
+                    <strong>Cons:</strong> Difficult to track resources per environment, complicates RBAC</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Decision</h4>
+                <p><strong>Option 1 (Environment-Level)</strong> for V1. "Environment = namespace + cluster" is easy mental model. Customers who need cross-cluster flexibility can create separate environments (e.g., prod-azure and prod-gcp instead of just prod).</p>
+            </div>
+
+            <h3>Environment Creation Flow</h3>
+            <p>The environment creation workflow allows users to select a Kubernetes cluster and namespace from a centralized interface:</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Create New Environment.png" alt="Create new environment - initial step">
+                            <div class="carousel-caption">Create new environment - initial step</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Create New Environment by setting the K8 cluster.png" alt="Select Kubernetes cluster for environment">
+                            <div class="carousel-caption">Select Kubernetes cluster for environment</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Selecting from the connected K8 cluster dropdown.png" alt="Cluster selection dropdown">
+                            <div class="carousel-caption">Cluster selection dropdown</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Create New Environment by setting the K8 namespace.png" alt="Set namespace for the environment">
+                            <div class="carousel-caption">Set namespace for the environment</div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+                <div class="carousel-info">
+                    <span class="carousel-title">Environment Creation Flow</span>
+                    <span class="carousel-counter">1 / 4</span>
+                </div>
+            </div>
+
+            <h3>Decommissioning & Error Handling</h3>
+            <p>Reviewed workflows for when cluster goes away or becomes unreachable:</p>
+
+            <ul>
+                <li><strong>Scenario 1: Kubeconfig removed, cluster not decommissioned</strong> → CMF marks cluster as DISCONNECTED, preserves metadata, blocks new operations, waits for recovery</li>
+                <li><strong>Scenario 2: Kubeconfig removed, cluster decommissioned via API</strong> → CMF deletes metadata from DB, cleanup complete</li>
+                <li><strong>Scenario 3: Cluster unreachable but kubeconfig valid</strong> → CMF logs warnings, heartbeat checker retries, transitions to CONNECTED when cluster recovers</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>Critical Edge Case I Raised</h4>
+                <p><strong>Problem:</strong> "What if user decommissions cluster but it still has running Flink jobs?"</p>
+                <p><strong>Solution:</strong> Decommission API validates no environments or resources reference the cluster. If validation fails, request rejected with clear error message. User must stop/delete resources first, then decommission.</p>
+            </div>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Env Details - Day 'N'.png" alt="Environment details in normal connected state">
+                            <div class="carousel-caption">Environment details in normal connected state (Day N)</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Env Details when cluster is disconnected on Day 'N'.png" alt="Environment when cluster is disconnected">
+                            <div class="carousel-caption">Environment when cluster is disconnected</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Env Details when cluster is decommissioned on Day 'N'.png" alt="Environment when cluster is decommissioned">
+                            <div class="carousel-caption">Environment when cluster is decommissioned</div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+                <div class="carousel-info">
+                    <span class="carousel-title">Cluster State Transitions</span>
+                    <span class="carousel-counter">1 / 3</span>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="../images/confluent/multik8s/Statements when decommissioned.png" alt="Statement view when cluster is decommissioned">
+                <p class="image-caption">Statement view when cluster is decommissioned</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Implementation -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Solution Implementation</h2>
+
+            <h3>Application Management Across Clusters</h3>
+            <p>Users can create and manage Flink applications on any connected Kubernetes cluster through the unified interface:</p>
+
+            <div class="image-container">
+                <img src="../images/confluent/multik8s/Application Tab in Environment  - Day 0.png" alt="Application tab on Day 0 - empty state">
+                <p class="image-caption">Application tab on Day 0 - empty state</p>
+            </div>
+
+            <div class="image-container">
+                <img src="../images/confluent/multik8s/Create Application.png" alt="Create application form">
+                <p class="image-caption">Create application form</p>
+            </div>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Application details (overview).png" alt="Application details - overview tab">
+                            <div class="carousel-caption">Application details - overview tab</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Application details (overview)-1.png" alt="Application details - overview expanded">
+                            <div class="carousel-caption">Application details - overview expanded</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Application details (Events log).png" alt="Application details - events log">
+                            <div class="carousel-caption">Application details - events log</div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+                <div class="carousel-info">
+                    <span class="carousel-title">Application Details Views</span>
+                    <span class="carousel-counter">1 / 3</span>
+                </div>
+            </div>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Application list page (filter).png" alt="Application list with filtering">
+                            <div class="carousel-caption">Application list with filtering</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Application list page (filter)-1.png" alt="Application list with filters applied">
+                            <div class="carousel-caption">Application list with filters applied</div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+                <div class="carousel-info">
+                    <span class="carousel-title">Application List Filtering</span>
+                    <span class="carousel-counter">1 / 2</span>
+                </div>
+            </div>
+
+            <h3>Compute Pool Configuration</h3>
+            <p>Compute pools can be created and managed for each Kubernetes cluster with basic and advanced configuration options:</p>
+
+            <div class="image-container">
+                <img src="../images/confluent/multik8s/Compute Pool - Empty state screen.png" alt="Compute pool empty state">
+                <p class="image-caption">Compute pool empty state</p>
+            </div>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Compute Pool - Create.png" alt="Create compute pool - basic view">
+                            <div class="carousel-caption">Create compute pool - basic view</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Compute Pool - Create (With advanced view).png" alt="Create compute pool - advanced view">
+                            <div class="carousel-caption">Create compute pool - advanced view</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Compute Pool - Create (With advanced view)-1.png" alt="Advanced configuration options - part 1">
+                            <div class="carousel-caption">Advanced configuration options - part 1</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Compute Pool - Create (With advanced view)-2.png" alt="Advanced configuration options - part 2">
+                            <div class="carousel-caption">Advanced configuration options - part 2</div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+                <div class="carousel-info">
+                    <span class="carousel-title">Compute Pool Creation Flow</span>
+                    <span class="carousel-counter">1 / 4</span>
+                </div>
+            </div>
+
+            <h3>Statement Management</h3>
+            <p>SQL statements can be executed across environments on different clusters:</p>
+
+            <div class="image-container">
+                <img src="../images/confluent/multik8s/Statement Empty state screen.png" alt="Statement empty state">
+                <p class="image-caption">Statement empty state</p>
+            </div>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Statement.png" alt="Statement execution view">
+                            <div class="carousel-caption">Statement execution view</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Statement-1.png" alt="Statement results view">
+                            <div class="carousel-caption">Statement results view</div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+                <div class="carousel-info">
+                    <span class="carousel-title">Statement Execution</span>
+                    <span class="carousel-counter">1 / 2</span>
+                </div>
+            </div>
+
+            <h3>Environment & Filtering</h3>
+            <p>Advanced filtering capabilities allow users to quickly find resources across multiple clusters:</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Environment details (filter).png" alt="Environment details with filter options">
+                            <div class="carousel-caption">Environment details with filter options</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/multik8s/Environment details (filter)-1.png" alt="Environment details with filters applied">
+                            <div class="carousel-caption">Environment details with filters applied</div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+                <div class="carousel-info">
+                    <span class="carousel-title">Environment Filtering</span>
+                    <span class="carousel-counter">1 / 2</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Impact & Outcome</h2>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Single UI for Multi-Cloud</h4>
+                    <p>Users can manage Flink deployments across AWS, Azure, GCP from one C3 instance, dramatically reducing operational complexity.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Cost Optimization</h4>
+                    <p>No need to install full CMF stack in each cloud provider - lightweight FKO spokes reduce infrastructure overhead.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Enterprise Security</h4>
+                    <p>Vault integration supports enterprise credential management practices while maintaining backward compatibility with simpler deployments.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Operational Overhead Reduction</h4>
+                    <p><strong>Reduced</strong> operational overhead by 70% by <strong>eliminating</strong> the need to manage N separate CMF installations, consolidating to a single master instance managing 10+ K8s clusters across multiple cloud providers.</p>
+                </div>
+            </div>
+
+            <h3>RFC Status</h3>
+            <p>Design approved. Backend implementation targeted for 2026 Q1. Frontend UX to follow in subsequent release.</p>
+        </div>
+    </section>
+
+    <!-- Learnings -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Key Learnings</h2>
+
+            <h3>Systems Thinking in Design Review</h3>
+            <p>Reviewing architecture proposals requires thinking beyond UI screens to understand data flows, failure modes, and operational implications. The decommissioning edge case only became apparent when mapping out all state transitions.</p>
+
+            <h3>Balancing Simplicity and Flexibility</h3>
+            <p>Environment-level cluster specification is less flexible than resource-level, but dramatically simpler mental model. Good design often means choosing constraints that make systems understandable rather than maximally powerful.</p>
+
+            <div class="highlight-box">
+                <h4>Value of Design Review</h4>
+                <p>As reviewer, my role wasn't to redesign the architecture, but to pressure-test edge cases, validate user flows, and ensure decisions were intentional. Asking "What happens when..." questions uncovered gaps that would have been costly bugs in production.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="project-section">
+        <div class="container-small">
+            <a href="../index.html#work" class="back-link">← Back to all projects</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Abhilash Bhattacharjee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/project-protection.js"></script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

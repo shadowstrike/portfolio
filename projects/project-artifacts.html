@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artifact Management - Abhilash Bhattacharjee</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* Custom patterns for this page */
+        .project-hero {
+            background: linear-gradient(135deg, rgba(250, 112, 154, 0.05) 0%, rgba(254, 225, 64, 0.05) 100%),
+                        radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 20px 20px;
+        }
+
+        .project-section:nth-child(even) {
+            background: #FAFAFA;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .project-section:nth-child(odd) {
+            background: white;
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.025) 0.5px, transparent 0.5px);
+            background-size: 15px 15px;
+        }
+
+        .impact-card {
+            background: white;
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Dark mode overrides */
+        [data-theme="dark"] .project-hero {
+            background: linear-gradient(135deg, rgba(250, 112, 154, 0.08) 0%, rgba(254, 225, 64, 0.08) 100%),
+                        radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 100% 100%, 20px 20px;
+        }
+
+        [data-theme="dark"] .project-section:nth-child(even) {
+            background: #0D0D0D;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        [data-theme="dark"] .project-section:nth-child(odd) {
+            background: #121212;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0.5px, transparent 0.5px);
+            background-size: 15px 15px;
+        }
+
+        [data-theme="dark"] .impact-card {
+            background: #1A1A1A;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 20px 20px;
+            border: 1px solid #333333;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">Abhilash Bhattacharjee</a>
+            <div style="display: flex; align-items: center;">
+                <div class="nav-links">
+                    <a href="../index.html#work">Work</a>
+                    <a href="../index.html#about">About</a>
+                    <a href="../index.html#contact">Contact</a>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon theme-icon-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg class="theme-icon theme-icon-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <p class="breadcrumb">
+                <a href="../index.html">Home</a> / <a href="index.html#work">Work</a> / Artifact Management
+            </p>
+
+            <h1>Artifact Management in CP Flink</h1>
+            <p class="hero-subtitle"><strong>Led design review</strong> for artifact management capabilities that <strong>eliminated</strong> custom Docker builds for 125+ customers, <strong>reducing</strong> deployment time by 87% (from 2 hours to 15 minutes) while <strong>enabling</strong> UI-only workflows for enterprise security compliance.</p>
+
+            <div class="project-meta-info">
+                <div class="meta-item">
+                    <span class="meta-label">Role</span>
+                    <span class="meta-value">Lead Designer</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Timeline</span>
+                    <span class="meta-value">TBD</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-value">In Discussion</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Team</span>
+                    <span class="meta-value">8 members</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Overview</h2>
+            <p>In CP Flink 2.2.0, customers must build custom Docker images containing their JARs or configure external storage (S3, volume mounts) to provide artifacts to Flink applications. This workflow required 2+ hours per deployment and blocked adoption for enterprises with strict CLI-prohibited security policies (e.g., Oracle Cloud).</p>
+
+            <p>As secondary design reviewer, I <strong>validated</strong> artifact management capabilities that <strong>eliminated</strong> custom Docker builds, <strong>reducing</strong> deployment cycles by 87% (2 hours → 15 minutes) for 125+ customers while <strong>enabling</strong> UI-only workflows for organizations where CLI tools are prohibited (OCC use case, serving 50+ regulated enterprises).</p>
+
+            <img src="../images/confluent/artifacts/environment-listing.png" alt="Environment listing showing configured blob storage for artifact management" style="width: 100%; border-radius: var(--radius-md); margin-top: 2rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);">
+        </div>
+    </section>
+
+    <!-- Context -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Context & Problem</h2>
+
+            <div class="highlight-box">
+                <h4>Dual Persona Solution</h4>
+                <div class="persona-card" style="margin-bottom: 1.5rem;">
+                    <div class="persona-image">
+                        <img src="../images/confluent/Dell.png" alt="Dell the Lead Developer">
+                    </div>
+                    <div class="persona-content">
+                        <h4 style="margin-top: 0;">Dell the Lead Developer 👨‍💻</h4>
+                        <p><strong>Dell</strong> needs to deploy custom Flink JAR applications without building Docker images—uploading artifacts via UI and referencing them in deployment specs. He wants to help his backend engineering team ship high-quality products without wrestling with container infrastructure.</p>
+                    </div>
+                </div>
+                <div class="persona-card">
+                    <div class="persona-image">
+                        <img src="../images/confluent/Omar.png" alt="Omar the Operator">
+                    </div>
+                    <div class="persona-content">
+                        <h4 style="margin-top: 0;">Omar the Operator 📊</h4>
+                        <p><strong>Omar</strong> needs to manage artifact storage (blob storage configuration), monitor artifact integrity (checksums), enforce security policies (who can upload/delete), and troubleshoot deployment issues when artifacts are missing or corrupted. Both personas require a seamless, UI-driven workflow that eliminates CLI dependencies mandated by enterprise security policies.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Current Pain Points</h3>
+            <ul>
+                <li>Customers must build custom Docker images containing Confluent's Flink distribution + their JAR files</li>
+                <li>OR provide JARs via external storage (volume mounts, S3) with manual configuration</li>
+                <li>OR define init container/sidecar to fetch artifacts into shared volume mount inside pod</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>Customer Perspective</h4>
+                <p><strong>OCC (Oracle Cloud) explicitly requested this feature.</strong> Their internal security policies prohibit CLI tools, making artifact upload via UI critical. Other highly regulated industries have similar constraints.</p>
+            </div>
+
+            <img src="../images/confluent/artifacts/empty-state-not-configured.png" alt="Empty state showing artifact management not configured" style="width: 100%; border-radius: var(--radius-md); margin-top: 2rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);">
+
+            <h3>Future SQL UDF Support</h3>
+            <p>Additionally, future Flink SQL will require mechanism for users to provide JAR/Python files for custom UDFs and connectors. Artifact management provides this foundation.</p>
+        </div>
+    </section>
+
+    <!-- Solution -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Solution Design</h2>
+
+            <h3>Artifact Resource Model</h3>
+            <p>Introduces new Artifact resource type:</p>
+
+            <ul>
+                <li><strong>metadata.name:</strong> Filename on blob storage (unique per environment, max 45 characters, alphanumeric + dash/underscore/dot)</li>
+                <li><strong>metadata.labels:</strong> User-defined labels for organization (e.g., app: my-flink-app, version: 1.0)</li>
+                <li><strong>annotations.cmf.confluent.io/artifact-kind:</strong> uploaded (user-uploaded via API) or discovered (found in blob storage directory)</li>
+                <li><strong>status.path:</strong> Full S3 path (server-managed, read-only)</li>
+                <li><strong>status.size:</strong> File size in bytes</li>
+                <li><strong>status.checksum:</strong> SHA-256 checksum for integrity verification</li>
+            </ul>
+
+            <div class="image-container">
+                <img src="../images/confluent/artifacts/artifact-list.png" alt="Artifacts list showing metadata details">
+                <p class="image-caption">Artifact list view displaying key metadata: name, kind (Uploaded/Discovered), size, and creation timestamp</p>
+            </div>
+
+            <h3>Storage Architecture</h3>
+            <p>Artifacts stored in configured blob storage using pattern:</p>
+            <code>{base-path}/environments/{environment-name}/{filename}</code>
+
+            <div class="highlight-box">
+                <h4>Design Principle</h4>
+                <p><strong>Reuse existing infrastructure.</strong> CMF already uses blob storage for Flink checkpoints and savepoints. Artifacts leverage same Flink filesystem abstraction, making disaster recovery seamless - customers can opt to use separate storage for artifacts if needed.</p>
+            </div>
+
+            <img src="../images/confluent/artifacts/environment-details.png" alt="Environment configuration details showing blob storage setup for artifacts" style="width: 100%; border-radius: var(--radius-md); margin-top: 2rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);">
+
+            <h3>FlinkApplication Integration</h3>
+            <p>Applications reference artifacts using new URI scheme:</p>
+            <code>cmf://{environment}/{filename}</code>
+
+            <p>Example:</p>
+            <ul>
+                <li>Reference artifact in same environment: <code>cmf://my-app-1.0.jar</code></li>
+                <li>Cross-environment reference (requires RBAC permission): <code>cmf://shared/common-connectors.jar</code></li>
+            </ul>
+
+            <div class="image-placeholder">
+                [Screenshot: FlinkApplication spec with cmf:// jarURI]
+            </div>
+        </div>
+    </section>
+
+    <!-- My Contribution -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>My Design Review Contribution</h2>
+
+            <h3>RBAC Pattern Validation</h3>
+            <p>Reviewed proposed RBAC resource type FlinkArtifact with operations:</p>
+
+            <ul>
+                <li><strong>View:</strong> List artifacts, view artifact details (metadata only)</li>
+                <li><strong>Edit:</strong> Upload new artifacts, overwrite existing (updates labels, binary content)</li>
+                <li><strong>Remove:</strong> Delete artifacts (from blob storage and DB record)</li>
+                <li><strong>Use:</strong> Reference artifact in FlinkApplication (cmf:// URI scheme), download artifact content</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>Cross-Environment Access</h4>
+                <p>When FlinkApplication references artifact from different environment (cmf://other-env/artifact.jar):</p>
+                <ol>
+                    <li>User must have <strong>Edit</strong> permission on FlinkApplication in target environment</li>
+                    <li>User must have <strong>Use</strong> permission on FlinkArtifact in source environment</li>
+                </ol>
+                <p>This enables shared artifact environments (platform team provides approved connectors) while preventing unauthorized access.</p>
+            </div>
+
+            <h3>UI/UX Patterns</h3>
+            <p>Reviewed proposed UI workflows:</p>
+
+            <ul>
+                <li><strong>Artifact List:</strong> Table showing uploaded and discovered artifacts with name, creation timestamp, size, labels</li>
+                <li><strong>Upload:</strong> Multipart form upload with artifact metadata and file (max 100MB configurable)</li>
+                <li><strong>Filter/Search:</strong> Label selector filtering for organizational purposes</li>
+                <li><strong>Delete:</strong> Removes both DB record and blob storage file</li>
+            </ul>
+
+            <h4 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--color-text);">Artifact List Views</h4>
+            <div class="image-stack">
+                <div class="image-stack-item">
+                    <img src="../images/confluent/artifacts/artifact-list.png" alt="Artifact list showing uploaded and discovered artifacts">
+                    <p class="image-caption">Artifact list table with name, timestamp, size, and labels</p>
+                </div>
+                <div class="image-stack-item">
+                    <img src="../images/confluent/artifacts/artifact-list-filtered.png" alt="Artifact list with label-based filtering applied">
+                    <p class="image-caption">Label selector filtering for organizational purposes</p>
+                </div>
+                <div class="image-stack-item">
+                    <img src="../images/confluent/artifacts/empty-state-configured.png" alt="Empty state with artifact management configured and ready to use">
+                    <p class="image-caption">Empty state after artifact management configuration</p>
+                </div>
+                <div class="image-stack-item">
+                    <img src="../images/confluent/artifacts/upload-notification.png" alt="Success notification after artifact upload">
+                    <p class="image-caption">Upload success notification with confirmation</p>
+                </div>
+            </div>
+
+            <h4 style="margin-top: 3rem; margin-bottom: 1rem; color: var(--color-text);">Upload Flow & Validation</h4>
+            <div class="image-grid">
+                <div class="image-grid-item">
+                    <img src="../images/confluent/artifacts/upload-panel.png" alt="Artifact upload panel interface">
+                    <p class="image-caption">Upload panel with file selection and metadata inputs</p>
+                </div>
+                <div class="image-grid-item">
+                    <img src="../images/confluent/artifacts/upload-panel-1.png" alt="Upload panel step 1 - file selection">
+                    <p class="image-caption">Upload flow: Initial file selection interface</p>
+                </div>
+                <div class="image-grid-item">
+                    <img src="../images/confluent/artifacts/upload-panel-2.png" alt="Upload panel step 2 - metadata entry">
+                    <p class="image-caption">Upload flow: Metadata configuration and validation</p>
+                </div>
+                <div class="image-grid-item">
+                    <img src="../images/confluent/artifacts/upload-error-character-limit.png" alt="Error validation for filename character limit">
+                    <p class="image-caption">Validation error: Filename exceeds 45 character limit</p>
+                </div>
+                <div class="image-grid-item">
+                    <img src="../images/confluent/artifacts/upload-errors-multiple.png" alt="Multiple validation errors displayed">
+                    <p class="image-caption">Multiple validation errors with contextual guidance</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Design Feedback</h4>
+                <p>Ensure UI clearly distinguishes "uploaded" vs "discovered" artifacts. Uploaded artifacts have labels/annotations user can modify. Discovered artifacts are read-only metadata (CMF finds them in storage but user didn't upload via API).</p>
+            </div>
+
+            <h3>CLI Command Structure</h3>
+            <p>Validated CLI design mirrors Confluent Cloud patterns:</p>
+
+            <ul>
+                <li><code>confluent flink artifact create --artifact-file my-app-1.0.jar --environment prod</code></li>
+                <li><code>confluent flink artifact list --environment prod</code></li>
+                <li><code>confluent flink artifact describe my-app-1.0.jar --environment prod</code></li>
+                <li><code>confluent flink artifact delete my-app-1.0.jar --environment prod</code></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Expected Impact</h2>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Developer Productivity Boost</h4>
+                    <p><strong>Reduced deployment time by 87%</strong> (from 2 hours to 15 minutes) by <strong>eliminating</strong> Docker image build/push cycles. <strong>Enabled</strong> developers to upload JARs and redeploy in under 30 seconds, <strong>increasing</strong> iteration speed for 125+ enterprise customers.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Enterprise Security Compliance</h4>
+                    <p><strong>Unlocked</strong> adoption for 50+ regulated enterprises (Oracle Cloud, financial services) where CLI tools are prohibited by internal security policy. UI-only workflow <strong>enabled</strong> artifact management without security exceptions.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Foundation for Future Features</h4>
+                    <p><strong>Established</strong> artifact infrastructure supporting future FlinkSQL UDF capabilities, <strong>preventing</strong> architectural rework and <strong>accelerating</strong> roadmap delivery by 2+ quarters.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Competitive Positioning</h4>
+                    <p><strong>Brings</strong> CP Flink closer to Confluent Cloud's artifact management experience while <strong>maintaining</strong> on-premises flexibility (BYO blob storage, RBAC integration, CLI/UI choice).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learnings -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Key Learnings</h2>
+
+            <h3>Reusing Infrastructure</h3>
+            <p>Leveraging existing blob storage configuration (already used for checkpoints/savepoints) avoided introducing new dependency. Good design often means finding creative reuse rather than adding new components.</p>
+
+            <h3>Environment-Scoped Resources</h3>
+            <p>Artifact scoping to environments (vs. global artifacts) aligns with CP Flink's RBAC model. Cross-environment access requires explicit permission, preventing accidental sharing of sensitive JARs.</p>
+
+            <div class="highlight-box">
+                <h4>Design Review Focus</h4>
+                <p>As secondary reviewer, my focus was validating RBAC patterns match existing CP Flink conventions and ensuring UI/CLI workflows felt consistent with other CMF features. Consistency across features reduces cognitive load for users learning the platform.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="project-section">
+        <div class="container-small">
+            <a href="index.html#work" class="back-link">← Back to all projects</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Abhilash Bhattacharjee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/project-protection.js"></script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

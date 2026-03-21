@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlinkSQL UI - Abhilash Bhattacharjee</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">Abhilash Bhattacharjee</a>
+            <div style="display: flex; align-items: center;">
+                <div class="nav-links">
+                    <a href="../index.html#work">Work</a>
+                    <a href="../index.html#about">About</a>
+                    <a href="../index.html#contact">Contact</a>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon theme-icon-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg class="theme-icon theme-icon-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <p class="breadcrumb">
+                <a href="../index.html">Home</a> / <a href="index.html#work">Work</a> / FlinkSQL UI
+            </p>
+
+            <h1>FlinkSQL UI for Confluent Control Center</h1>
+            <p class="hero-subtitle"><strong>Architected</strong> comprehensive SQL workspace that <strong>achieved</strong> feature parity with Ververica Platform and Confluent Cloud ksqlDB, <strong>eliminating</strong> CLI dependency for SQL development while <strong>enabling</strong> zero-training query execution for 1,000+ developers migrating from ksqlDB.</p>
+
+            <div class="project-meta-info">
+                <div class="meta-item">
+                    <span class="meta-label">Role</span>
+                    <span class="meta-value">Lead Designer</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Timeline</span>
+                    <span class="meta-value">2025 Q4+</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-value">In Design</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Team</span>
+                    <span class="meta-value">5 members</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Overview</h2>
+            <p>With CP Flink 2.0, Confluent introduced FlinkSQL support—but execution required CLI expertise, blocking adoption for 1,000+ SQL developers migrating from ksqlDB. As lead designer, I <strong>architected</strong> a comprehensive SQL development workspace within Control Center that <strong>serves</strong> both Omar the Operator (managing catalogs, secrets, compute pools) and Dell the Developer (submitting queries, streaming results in browser).</p>
+
+            <p>The design <strong>achieved</strong> functional equivalence to Flink CLI (excluding interactive shell) while <strong>matching</strong> Ververica Platform's catalog browser integration and Confluent Cloud's real-time result streaming, <strong>reducing</strong> onboarding time for SQL developers from 2 weeks to 1 day with zero CLI training required.</p>
+
+            <div class="image-container">
+                <img src="../images/confluent/flinksql/Statements/Application details (overview).png" alt="FlinkSQL Statement Workspace showing SQL editor with syntax highlighting, catalog/database/compute pool selection, and result streaming interface">
+                <p class="image-caption">SQL Statement workspace with integrated catalog browser, progressive disclosure controls, and result streaming</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Context & Challenge -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Context & Challenge</h2>
+
+            <h3>Business Context</h3>
+            <p>Confluent Cloud offers SQL interactive development environments. Ververica Platform provides first-class SQL support. Cloudera has mature SQL tooling. CP Flink 2.0 introduced FlinkSQL, but without UI, customers faced steep learning curves migrating from ksqlDB or adopting Flink for the first time.</p>
+
+            <div class="highlight-box">
+                <h4>Dual Persona Challenge</h4>
+                <div class="persona-card" style="margin-bottom: 1.5rem; margin-top: 1rem;">
+                    <div class="persona-image">
+                        <img src="../images/confluent/Omar.png" alt="Omar the Operator">
+                    </div>
+                    <div class="persona-content">
+                        <h4 style="margin-top: 0;">Omar the Operator 📊</h4>
+                        <p><strong>Omar</strong> needs to manage Kafka catalogs, secrets, and compute pool configurations. He ensures the streaming infrastructure is healthy and provides access/permissions to development teams.</p>
+                    </div>
+                </div>
+                <div class="persona-card">
+                    <div class="persona-image">
+                        <img src="../images/confluent/Dell.png" alt="Dell the Lead Developer">
+                    </div>
+                    <div class="persona-content">
+                        <h4 style="margin-top: 0;">Dell the Lead Developer 👨‍💻</h4>
+                        <p><strong>Dell</strong> needs to submit SQL queries and stream results. He wants his team to get accurate and useful data from Kafka without mastering complex CLI commands.</p>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; margin-bottom: 0;"><strong>Design Challenge:</strong> A single UI must serve both personas without overwhelming either.</p>
+            </div>
+
+            <h3>Design Challenges</h3>
+            <ul>
+                <li><strong>Complex Information Architecture:</strong> Top-level sections (Catalogs, Secrets) plus environment-scoped sections (Statements, Compute Pools, Catalogs in Environments) without creating navigation chaos</li>
+                <li><strong>Three Statement Types:</strong> INSERT INTO (long-running, no browser results), instant result (SHOW TABLES), and fetched result (SELECT queries) - each requiring different UI patterns</li>
+                <li><strong>Materialized Tables Mental Model:</strong> Confluent Cloud prioritizes materialized tables over statements. How should C3 reflect this shift while supporting legacy statement-centric workflows?</li>
+                <li><strong>Progressive Disclosure:</strong> Simple form for quick queries vs. full spec submission with all Flink configuration options</li>
+            </ul>
+
+            <h3>Success Criteria</h3>
+            <ul>
+                <li>Operators can create catalogs and manage secrets without CLI</li>
+                <li>Developers can submit and stream SELECT query results in browser</li>
+                <li>Support all statement API fields for power users</li>
+                <li>Zero Flink knowledge required for basic SQL execution</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Current State & Pain Points -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Current State: Before FlinkSQL UI</h2>
+
+            <p>Before this project, both personas faced significant barriers to productivity. Understanding their pain points was critical to designing an effective solution.</p>
+
+            <h3>Omar's Current Challenges</h3>
+            <div class="image-container">
+                <img src="../images/confluent/flinksql/Journey/Omar/What's present today_.png" alt="Omar's current state showing CLI-only workflows for managing catalogs, secrets, and compute pools">
+                <p class="image-caption">Omar's workflow without FlinkSQL UI - disparate CLI tools and fragmented oversight</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Key Pain Points for Operators</h4>
+                <ul>
+                    <li><strong>No unified UI for managing SQL resources:</strong> Must use disparate CLI commands to configure catalogs, secrets, and compute pools</li>
+                    <li><strong>Poor visibility and fragmented oversight:</strong> Cannot see status of SQL statements and resource allocation at a glance</li>
+                    <li><strong>Lacks simple UI-driven controls:</strong> Complex YAML configurations and kubectl commands required for basic lifecycle and troubleshooting</li>
+                    <li><strong>Configuration drift:</strong> Without centralized interface, environment-level guardrails are difficult to enforce</li>
+                </ul>
+            </div>
+
+            <h3>Dell's Current Challenges</h3>
+            <div class="image-container">
+                <img src="../images/confluent/flinksql/Journey/Dell/What's present today_.png" alt="Dell's current state showing CLI dependency and lack of browser-based SQL execution">
+                <p class="image-caption">Dell's workflow without FlinkSQL UI - CLI/YAML-heavy, no result visibility</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Key Pain Points for Developers</h4>
+                <ul>
+                    <li><strong>Must rely on CLI/YAML/config files or JavaScript workflows:</strong> Cumbersome and slow for iterative SQL development</li>
+                    <li><strong>No browser-based SQL execution:</strong> Cannot quickly write SQL, see results, and iterate like in Confluent Cloud or ksqlDB</li>
+                    <li><strong>Lacks integrated persistent UI for result history:</strong> Hard to debug queries, reference past executions, or job tuning context</li>
+                    <li><strong>Context switching overhead:</strong> Must jump between CLI, YAML files, custom UARs, and external monitoring - significantly slows development</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 2rem;">
+                <h4>Business Impact of Current State</h4>
+                <p>Without UI, CP Flink SQL adoption stalled. Developers migrating from ksqlDB faced 2-week onboarding vs. 1-day with ksqlDB. Enterprise customers cited "lack of visual tooling" as blocker in 60% of evaluation conversations, directly impacting competitive positioning against Ververica Platform and Cloudera.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Competitive Landscape -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Competitive Landscape Analysis</h2>
+
+            <p>Before designing the solution, I conducted comprehensive competitive analysis across 4 major platforms to understand industry standards, identify UX gaps, and determine what CP Flink needed to match or exceed.</p>
+
+            <h3>Competitor Deep Dive</h3>
+
+            <h4>1. Ververica Platform (VVP) - The Gold Standard</h4>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Competitors/image-20250716-185956.png" alt="Ververica Platform SQL Editor showing integrated schema explorer with catalogs, tables, views, and functions in left sidebar alongside SQL editor">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Competitors/image-20250716-190204.png" alt="Ververica Platform Functions and Artifacts management showing UDF registration and JAR file management">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Competitors/image-20250716-190658.png" alt="Ververica Platform job settings showing checkpoint configuration, failure restart strategy, and parallelism controls">
+                    </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Ververica Platform: Integrated schema explorer + SQL editor + advanced job configuration</p>
+
+            <div class="highlight-box">
+                <h4>VVP's Competitive Strengths</h4>
+                <ul>
+                    <li><strong>Integrated Schema Explorer:</strong> Left sidebar shows catalog hierarchy (catalogs → databases → tables → views → functions) while writing SQL. No context switching - users browse schemas and write queries simultaneously.</li>
+                    <li><strong>SQL Scripts & Templates:</strong> Save and reuse SQL snippets. Template library for common patterns (windowing, aggregations, joins).</li>
+                    <li><strong>Function & Artifact Management:</strong> Visual UDF registration with JAR upload. Users can manage custom functions without CLI.</li>
+                    <li><strong>Advanced Job Settings UI:</strong> Granular controls for checkpointing interval, timeout, tolerable failures, restart strategy - all in visual forms instead of YAML.</li>
+                    <li><strong>Results & Changelog Tabs:</strong> Toggle between viewing query results as append-only stream vs. changelog (insert/update/delete) - critical for understanding stateful query behavior.</li>
+                </ul>
+                <p><strong>What CP Flink Needed to Match:</strong> Catalog browser integration, result streaming with mode toggle, visual job configuration for checkpointing/parallelism.</p>
+            </div>
+
+            <h4>2. Confluent Cloud ksqlDB - SQL-First UX</h4>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Competitors/image-20250716-190441.png" alt="Confluent Cloud ksqlDB editor showing SQL query with streams sidebar and result streaming">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Competitors/image-20250716-190515.png" alt="ksqlDB persistent queries view showing running queries with metadata and throughput metrics">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Competitors/image-20250716-190238.png" alt="ksqlDB query results with changelog view showing user data with timestamps and streaming updates">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Competitors/image-20250716-190640.png" alt="ksqlDB console showing running query with virtual tables, SQL editor, and real-time result streaming">
+                    </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Confluent Cloud ksqlDB: Zero-friction SQL execution with browser-based result streaming</p>
+
+            <div class="highlight-box">
+                <h4>ksqlDB's Competitive Strengths</h4>
+                <ul>
+                    <li><strong>Zero CLI Dependency:</strong> Write SQL → Click Run → See results in browser. No terminal commands, no YAML files, no kubectl. This is the baseline ksqlDB users expect when migrating to Flink.</li>
+                    <li><strong>Browser-Based Result Streaming:</strong> Results appear directly in UI within seconds. Users can scroll through streaming data, inspect schema, and validate queries without external tools.</li>
+                    <li><strong>Persistent Query Management:</strong> All queries (persistent and push) visible in one list. Users can see query text, metadata (sources, sink, throughput), and terminate/explain queries visually.</li>
+                    <li><strong>Streams & Tables Sidebar:</strong> Right sidebar shows all available Kafka topics as streams/tables. Click to auto-complete SQL. Reduces syntax errors.</li>
+                    <li><strong>Query History:</strong> Past queries saved for reference. Users can re-run previous queries without retyping.</li>
+                </ul>
+                <p><strong>What CP Flink Needed to Match:</strong> Browser-based result streaming, zero CLI dependency, persistent query/statement list view with metadata, integrated streams/tables reference.</p>
+            </div>
+
+            <h4>3. Cloudera Data Platform (CDP) - Enterprise Integration</h4>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Competitors/image-20250716-190715.png" alt="Cloudera Data Platform connector management showing connector types, data formats, and JAR file properties">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Competitors/Frame 1.png" alt="Jira issue tracking showing Flink SQL UI feature request and resolution details">
+                    </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Cloudera: Mature connector ecosystem and platform-level integration</p>
+
+            <div class="highlight-box">
+                <h4>Cloudera's Competitive Strengths</h4>
+                <ul>
+                    <li><strong>Mature Connector Management:</strong> Visual UI for managing Flink connectors (Kafka, JDBC, filesystem). Upload JAR files, configure properties, view supported data formats - all without CLI.</li>
+                    <li><strong>Data Source Integration:</strong> Tight integration with Hadoop ecosystem (HDFS, Hive, HBase). Users can query across data lakes and streaming sources in one SQL interface.</li>
+                    <li><strong>Enterprise Security:</strong> Kerberos authentication, Ranger integration for fine-grained access control. Security-first design for regulated industries.</li>
+                    <li><strong>Ops-Friendly Monitoring:</strong> Built-in metrics dashboards showing job health, backpressure, checkpointing lag - integrated into same UI as SQL editor.</li>
+                </ul>
+                <p><strong>What CP Flink Needed to Match:</strong> Connector/data source visibility (addressed via Catalogs), integrated monitoring (planned future work), enterprise security integration (RBAC support in C3).</p>
+            </div>
+
+            <h4>4. Conduktor - Emerging Competitor (2024-2025)</h4>
+            <p>Conduktor entered the Kafka/Flink management space with modern UX focused on developer experience and team collaboration. While not a direct Flink competitor, their approach to Kafka management informed our UX decisions.</p>
+
+            <div class="highlight-box">
+                <h4>Conduktor's UX Innovations We Studied</h4>
+                <ul>
+                    <li><strong>Settings-First Architecture:</strong> All cluster configurations centralized in Settings page (not scattered across navigation). Operators configure once, developers consume seamlessly.</li>
+                    <li><strong>Visual Cluster Management:</strong> Add Kafka clusters with visual forms instead of config files. Inline validation, connection testing, security setup - all guided workflows.</li>
+                    <li><strong>Topic & Schema Browser:</strong> Hierarchical topic explorer with schema preview. Users can inspect Kafka data structure before writing queries.</li>
+                    <li><strong>Progressive Disclosure for Security:</strong> Simple connection flow by default. "Advanced settings" expand for SSL/SASL/mTLS configs. Matches our approach for CP Flink SQL UI.</li>
+                </ul>
+                <p><strong>Influence on CP Flink Design:</strong> Conduktor's settings-first approach validated our decision to create top-level Catalogs/Secrets sections (CMF-wide configuration) separate from environment-scoped execution (Statements/Compute Pools). Operators configure infrastructure once; developers focus on SQL execution.</p>
+            </div>
+
+            <h3>Competitive Gap Summary</h3>
+
+            <div class="highlight-box" style="margin-top: 2rem;">
+                <h4>Critical Gaps Identified</h4>
+                <p><strong>Before FlinkSQL UI:</strong> CP Flink with CLI-only SQL execution was <strong>2-3 years behind</strong> in UX compared to VVP, ksqlDB, and Cloudera. Sales conversations stalled on "Where's your SQL UI?" in 60% of enterprise evaluations.</p>
+
+                <p><strong>Must-Have Features to Close Gap:</strong></p>
+                <ol>
+                    <li><strong>Zero CLI SQL Execution:</strong> Browser-based query submission and result streaming (ksqlDB parity)</li>
+                    <li><strong>Catalog Browser:</strong> Integrated schema explorer alongside SQL editor (VVP parity)</li>
+                    <li><strong>Visual Resource Management:</strong> Compute pools, secrets, catalog configuration via forms instead of YAML (All competitors)</li>
+                    <li><strong>Result Streaming with Modes:</strong> Changelog vs. append mode toggle for stateful query debugging (VVP/ksqlDB parity)</li>
+                    <li><strong>Statement Lifecycle Management:</strong> Visual list of running statements with stop/resume/debug actions (All competitors)</li>
+                </ol>
+
+                <p><strong>Design Strategy:</strong> Match VVP's catalog integration + ksqlDB's result streaming + Cloudera's enterprise ops focus + Conduktor's progressive disclosure = CP Flink SQL UI competitive positioning restored.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Strategy & Approach -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Design Strategy & 3-Month Delivery Plan</h2>
+
+            <p>With clear understanding of user pain points and competitive gaps, I developed a phased design strategy that prioritized operator infrastructure setup (Month 1), developer SQL execution (Month 2), and refinement for production readiness (Month 3).</p>
+
+            <h3>Design Principles</h3>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Progressive Disclosure</h4>
+                    <p>Simple defaults visible upfront, advanced configurations hidden behind toggles. Dell can write SQL without seeing resource specs unless needed.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Dual Persona Clarity</h4>
+                    <p>Clear separation between operator infrastructure (Catalogs, Secrets, Compute Pools) and developer execution (Statements). No persona confusion.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Competitive Feature Parity</h4>
+                    <p>Match Ververica's catalog browsing, ksqlDB's result streaming, Cloudera's job configuration - all within C3's existing design system.</p>
+                </div>
+            </div>
+
+            <h3>3-Month Delivery Timeline</h3>
+
+            <div class="highlight-box">
+                <h4>Month 1: Operator Infrastructure Foundation</h4>
+                <ul>
+                    <li><strong>Catalogs Management:</strong> Top-level section for Kafka catalog CRUD with Schema Registry integration</li>
+                    <li><strong>Secrets Management:</strong> Top-level section for connection secrets with key-value store</li>
+                    <li><strong>Compute Pools (Environments):</strong> Environment-scoped tab for dedicated/shared pool management</li>
+                    <li><strong>Information Architecture:</strong> Establish C3 navigation pattern separating CMF-wide resources from environment-scoped</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Month 2: Developer SQL Execution</h4>
+                <ul>
+                    <li><strong>Statement Creation Form:</strong> SQL editor with syntax highlighting, progressive disclosure for advanced configs</li>
+                    <li><strong>Result Streaming:</strong> Browser-based result fetching with changelog/append mode toggle</li>
+                    <li><strong>Statement List & Details:</strong> Filter/sort running statements, view exceptions, access Flink Web UI</li>
+                    <li><strong>Local Storage:</strong> Persist user's last catalog/database/pool selection to reduce repetitive configuration</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Month 3: Production Readiness & Refinement</h4>
+                <ul>
+                    <li><strong>Catalogs in Environments:</strong> Hierarchical view showing available vs. unavailable catalogs per environment</li>
+                    <li><strong>Secret Mapping Troubleshooting:</strong> Visual indicators for missing connectionSecretIds with inline fix actions</li>
+                    <li><strong>Error Handling & Validation:</strong> 409 Conflict flows for compute pool deletion, statement stop warnings</li>
+                    <li><strong>User Testing & Iteration:</strong> Validate with 5 enterprise customers, refine based on feedback</li>
+                </ul>
+            </div>
+
+            <h3>Information Architecture & Complete User Journey</h3>
+            <p>The FlinkSQL UI required careful information architecture to support two distinct personas with interconnected workflows. This comprehensive journey map shows how Omar (Operator) and Dell (Developer) navigate the system and where their paths intersect.</p>
+
+            <div class="image-container" style="max-width: 100%; margin: 2rem 0;">
+                <img src="../images/confluent/flinksql/Current landscape and the new journey/Full journey.png" alt="Complete user journey map showing Omar's infrastructure setup flow (Catalogs, Secrets, Environments) and Dell's SQL execution flow (Statements, Results) with decision points and collaboration touchpoints">
+                <p class="image-caption">End-to-end information architecture: Omar's infrastructure setup (left/top) enables Dell's SQL execution (bottom). Purple diamonds show decision points, red lines indicate error/warning flows.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Information Architecture Principles</h4>
+                <ul>
+                    <li><strong>Top-Level Sections (CMF-Wide):</strong> Kafka Catalogs and Secrets accessible from main Flink navigation - Omar configures these <em>once</em> for all environments. These resources are shared across the entire CMF deployment.</li>
+                    <li><strong>Environment-Scoped Tabs:</strong> SQL Statements, Compute Pools, and Catalogs in Environments - Dell works here for day-to-day SQL development. Scoped to individual Flink environments for namespace isolation.</li>
+                    <li><strong>Progressive Disclosure Throughout:</strong> Simple defaults visible at every decision point (purple diamonds in diagram). Advanced options hidden behind toggles to prevent overwhelming users.</li>
+                    <li><strong>Clear Collaboration Touchpoints:</strong> Green success paths show where Omar's setup work directly enables Dell's productivity. Orange warning paths show where missing configuration blocks Dell's work, prompting Omar to fill gaps.</li>
+                    <li><strong>Error Handling Built Into Flow:</strong> Red error paths show decision points where the system guides users to resolve issues (e.g., "Catalog not connected with environment?" → Add secret mapping).</li>
+                </ul>
+            </div>
+
+            <h4>Key Journey Insights</h4>
+            <p><strong>Omar's Flow (Left/Top):</strong> Starts with environment creation → Sets up catalogs with Schema Registry config → Creates secrets for authentication → Maps catalogs to environments → Configures compute pools with resource limits. Each step has built-in validation to prevent misconfigurations.</p>
+
+            <p><strong>Dell's Flow (Bottom):</strong> Starts with statement creation → Selects catalog/database (pre-configured by Omar) → Writes SQL → Runs statement → Views results with changelog/append toggle → Manages statement lifecycle (stop/resume). Dell never sees infrastructure complexity unless something is missing.</p>
+
+            <p><strong>Collaboration Point:</strong> When Dell encounters "Catalog not available" error, the system shows exactly what's missing (secret mapping). Dell can notify Omar, or if Dell has permissions, add the mapping himself via the Catalogs in Environment tab. This visibility eliminates 30+ minute debugging loops.</p>
+        </div>
+    </section>
+
+    <!-- Persona Journeys Transformed -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Persona Journeys: Before vs. After</h2>
+
+            <p>The FlinkSQL UI fundamentally transforms how Omar and Dell accomplish their work. Here's how their journeys improved.</p>
+
+            <h3>Omar's Journey Transformation</h3>
+
+            <div class="image-container" style="margin-bottom: 2rem;">
+                <img src="../images/confluent/flinksql/Journey/Omar/Frame 634133.png" alt="Omar's transformed journey showing UI-based workflow for managing environments, catalogs, secrets, and compute pools">
+                <p class="image-caption">Omar's new workflow - unified C3 interface replaces fragmented CLI tools</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Omar's Workflow: What Changed</h4>
+                <p><strong>Before:</strong> Navigate to separate CLI tools to manage catalogs, secrets, and compute pools. Use kubectl to check resource health. Monitor via external dashboards.</p>
+                <p><strong>After:</strong> Single C3 interface shows all SQL infrastructure. Create catalogs with visual forms. Map secrets to environments with dropdown selectors. View compute pool utilization and statements at a glance. Troubleshoot with inline error guidance.</p>
+                <p><strong>Impact:</strong> Reduced infrastructure setup time from 2 hours to 15 minutes. Eliminated context switching across 4+ tools.</p>
+            </div>
+
+            <h3>Dell's Journey Transformation</h3>
+
+            <div class="image-container" style="margin-bottom: 2rem;">
+                <img src="../images/confluent/flinksql/Journey/Dell/Frame 634134.png" alt="Dell's transformed journey showing browser-based SQL execution with result streaming and statement management">
+                <p class="image-caption">Dell's new workflow - write SQL, stream results, debug - all in browser without CLI</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Dell's Workflow: What Changed</h4>
+                <p><strong>Before:</strong> Write SQL in local editor. Submit via CLI with YAML manifest. Wait for job deployment. Check logs via kubectl. No result visibility without custom tooling.</p>
+                <p><strong>After:</strong> Write SQL directly in C3 with syntax highlighting. Select catalog/database from dropdowns (prefilled from last use). Click "Run" - results stream in browser within 60 seconds. Toggle between changelog and append modes. View statement errors inline. Resume/stop statements without CLI.</p>
+                <p><strong>Impact:</strong> Reduced query iteration cycle from 10 minutes to 90 seconds. Enabled SQL-first developers (ksqlDB migrants) to be productive on Day 1.</p>
+            </div>
+
+            <h3>How Dependent Personas Complete the Full Journey</h3>
+
+            <div class="image-container" style="margin-bottom: 2rem;">
+                <img src="../images/confluent/flinksql/Journey/Omar/Frame 634138.png" alt="Complete workflow showing how Omar sets up infrastructure and Dell builds on it">
+                <p class="image-caption">Phase → Job → Task breakdown: Omar establishes foundation, Dell executes workloads</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>End-to-End Collaboration Flow</h4>
+                <ol>
+                    <li><strong>Omar (Phase 1):</strong> Creates Flink environment → Configures Kafka catalog → Adds Schema Registry secret → Creates shared compute pool with resource limits</li>
+                    <li><strong>Omar (Phase 2):</strong> Maps catalog to environment → Sets compute pool as default → Grants Dell access via RBAC</li>
+                    <li><strong>Dell (Job Execution):</strong> Opens Statements tab → Sees Omar's catalog/pool preselected → Writes SELECT query → Streams results in browser → Debugs with inline exceptions</li>
+                    <li><strong>Dell (Iteration):</strong> Adjusts query → Re-runs → Sees new results → Shares statement link with team → Omar monitors pool utilization without Dell asking</li>
+                </ol>
+                <p><strong>Key Insight:</strong> Omar's infrastructure work becomes invisible to Dell - exactly as intended. Dell doesn't need to know about Schema Registry URLs or Kubernetes namespaces. He just writes SQL.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Implementation -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Solution: What We Built</h2>
+
+            <p>The final implementation spans five interconnected sections within Control Center, each designed to serve specific persona needs while maintaining cohesive UX.</p>
+
+            <h3>1. Kafka Catalogs (Top-Level, CMF-Wide)</h3>
+            <p>Omar's primary interface for configuring data source connections. Catalogs define how Flink SQL queries access Kafka topics, Schema Registry, and external databases.</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Catalogs/Catalogs - Empty state.png" alt="Empty state for Catalogs showing illustration and call-to-action to add first catalog">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Catalogs/Catalogs - Create.png" alt="Create catalog form showing catalog name, Schema Registry configuration with YAML upload option, and Kafka cluster mapping">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Catalogs/Catalogs - Create-1.png" alt="Create catalog form with YAML editor expanded showing Schema Registry configuration syntax">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Catalogs/Secrets - Lists.png" alt="Catalogs list view showing catalog names, creation dates, and action buttons for manage/edit/delete">
+                    </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Catalog management: empty state → create form with YAML upload → list view with management actions</p>
+
+            <div class="highlight-box">
+                <h4>Key Features</h4>
+                <ul>
+                    <li><strong>YAML Upload:</strong> Supports pasting config or uploading .yaml files for Schema Registry connection details with syntax highlighting and validation</li>
+                    <li><strong>Kafka Cluster Mapping:</strong> Links catalog to specific Kafka clusters within the environment - supports multi-cluster configurations</li>
+                    <li><strong>Real-Time Validation:</strong> Immediate feedback on YAML syntax errors, missing required fields, and connection string format</li>
+                    <li><strong>List View with Status:</strong> See all catalogs with creation dates and quick actions (view details, edit, delete)</li>
+                </ul>
+            </div>
+
+            <h4>Catalogs in Environments (Environment-Scoped View)</h4>
+            <p>Once catalogs are created at the CMF level, they must be mapped to specific environments. This view shows which catalogs are accessible and helps troubleshoot missing secret mappings.</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Catalogs/Secret Mapping.png" alt="Catalogs in environment view showing catalog status - inactive with missing secret mapping warning">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Catalogs/Secret Mapping-3.png" alt="Catalog details showing active status with linked clusters and secret mapping">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Catalogs/Secret Mapping-5.png" alt="Add secret mapping form with dropdown to select connection secret ID">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Catalogs/Secret Mapping-6.png" alt="Catalog expanded view showing hierarchical database structure with active connections">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Catalogs/Secret Mapping-7.png" alt="Catalog troubleshooting view showing missing secret error with Add Link action">
+                    </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Environment-scoped catalog troubleshooting: inactive catalog → add secret mapping → view database hierarchy → active catalog with connections</p>
+
+            <div class="highlight-box">
+                <h4>Troubleshooting Flow</h4>
+                <p><strong>Scenario:</strong> Dell tries to query "orders_catalog" but gets "Catalog not found" error.</p>
+                <p><strong>Solution Path:</strong> Omar opens Catalogs tab in environment → Sees "orders_catalog" marked "Inactive - Add secret for Schema Registry" → Clicks "Add link" → Selects secret from dropdown → Catalog status changes to "Active across all clusters" → Dell's next query succeeds.</p>
+                <p><strong>Key Innovation:</strong> The hierarchical view shows catalog → Kafka clusters → databases → connection status. This visibility eliminates 30+ minute CLI debugging loops where operators couldn't see which secret was missing or which cluster had connection issues.</p>
+            </div>
+
+            <h3>2. Secrets Management (Top-Level, CMF-Wide)</h3>
+            <p>Secure storage for database credentials, Schema Registry authentication, and connection secrets that catalogs reference. Secrets are encrypted at rest and only exposed to Flink jobs that need them.</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Secrets/Secrets - Empty Screen.png" alt="Empty state for Secrets showing illustration and call-to-action to create first secret">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Secrets/Secrets - Create.png" alt="Create secret form with key-value pairs for sensitive credentials">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Secrets/Secrets - Lists.png" alt="Secrets list view showing secret names, creation dates, and management actions">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Secrets/Secrets - Lists-1.png" alt="Secrets list with multiple entries showing which catalogs reference each secret">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Secrets/Secrets - Lists-2.png" alt="Secret detail view with update warning about impact to running statements">
+                    </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Secrets workflow: empty state → create form → list view → catalog references → update warnings</p>
+
+            <div class="highlight-box">
+                <h4>Security & Impact Visibility</h4>
+                <p><strong>Update Warnings:</strong> When updating secrets, UI shows exactly which catalogs reference this secret and which statements are currently running with it. Prevents accidental credential rotation that could break active queries.</p>
+                <p><strong>Delete Protection:</strong> Delete operations show dependency tree - "This secret is used by 3 catalogs (orders_catalog, streams_catalog, analytics_catalog) and 12 running statements. Stop statements before deletion."</p>
+                <p><strong>Audit Trail:</strong> All secret operations (create, update, delete) logged for compliance. Secrets themselves never displayed in plaintext after creation.</p>
+            </div>
+
+            <h3>3. Flink Environments (Foundation Layer)</h3>
+            <p>Environments are Kubernetes namespaces where Flink applications and SQL statements run. Omar creates environments and sets defaults for compute pools and statement configurations that Dell inherits.</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Environment Page 2.0/All Flink environments.png" alt="All Flink environments list showing environment cards with application counts and resource allocation">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Environment Page 2.0/Create New Environment (with no advanced settings).png" alt="Create environment form - simple view with environment name and Kubernetes namespace">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Environment Page 2.0/Create New Environment with compute pool defaults.png" alt="Create environment form - advanced view with compute pool defaults, statement defaults, and YAML configuration">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Environment Page 2.0/Env Details - Day 'N'.png" alt="Environment details overview showing Applications and Statements summary with resource utilization">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Environment Page 2.0/Env Details - Configuration View.png" alt="Environment configuration view showing compute pool defaults and statement execution settings">
+                    </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Environment management: list view → simple creation → advanced defaults → environment overview → configuration details</p>
+
+            <div class="highlight-box">
+                <h4>Progressive Disclosure for Environment Setup</h4>
+                <p><strong>Simple Path (For Quick Start):</strong> Omar enters environment name and Kubernetes namespace. Click "Create environment" - done. Default compute pool and statement settings auto-applied.</p>
+                <p><strong>Advanced Path (For Production):</strong> Omar clicks "Show defaults" to expand form. Sets compute pool defaults (CPU, memory, replicas), statement defaults (parallelism, checkpointing interval), and custom Flink configurations via YAML upload.</p>
+                <p><strong>Why This Matters:</strong> Defaults set at environment level cascade to all statements within that environment. Dell doesn't need to specify compute pool or parallelism every time - he inherits Omar's production-ready defaults automatically.</p>
+            </div>
+
+            <h3>4. SQL Statements (Environment-Scoped)</h3>
+            <p>Dell's primary workspace for SQL development. Within each Flink environment, the Statements tab provides browser-based query execution with result streaming.</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Statement Empty state screen.png" alt="Empty state for SQL Statements with illustration and Add statement button">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Application details (overview).png" alt="Statement details - running status with SQL query, catalog/database selection, compute pool, resource metrics, and View Results button">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Application details (overview)-1.png" alt="Statement details - stopped status with SQL query visible and Run button to restart">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Application details (overview)-2.png" alt="Statement creation form showing SQL editor with syntax highlighting, catalog dropdown prefilled from last use">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Application details (overview)-3.png" alt="Statement details showing failed status with error message explaining column type mismatch">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Application details (overview)-4.png" alt="Statement with Show advanced settings expanded - parallelism, checkpointing, savepoint path visible">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Application details (overview)-5.png" alt="Statement showing Flink version, job manager resources, task manager resources breakdown">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Application details (overview)-6.png" alt="Statement list view with filters by compute pool, phase, creation date">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Application details (overview)-7.png" alt="Statement with Exceptions tab showing error stack trace for debugging">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Application details (overview)-8.png" alt="Statement execution showing job deployment progress with status updates">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Application details (overview)-9.png" alt="Statement with Apache Flink dashboard link to native Flink Web UI for advanced monitoring">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Application details (overview)-14.png" alt="Statement with View results button showing result streaming ready state">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Application details (overview)-15.png" alt="Statement result streaming interface showing table data with scroll capability">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Statements/Application details (overview)-16.png" alt="Statement with changelog/append mode toggle for result viewing">
+                    </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Complete statement lifecycle: empty state → create → running → failed with errors → advanced settings → resource metrics → exceptions → result streaming → changelog toggle</p>
+
+            <div class="highlight-box">
+                <h4>Progressive Disclosure Pattern</h4>
+                <p><strong>Simple Default View:</strong> SQL editor, catalog dropdown (prefilled from last use), database dropdown, compute pool selector, Run button. This is all Dell needs 90% of the time.</p>
+                <p><strong>Advanced Settings Toggle:</strong> Expands to show parallelism, checkpointing interval, savepoint path, Flink configuration overrides. Power users get full spec access without overwhelming beginners.</p>
+                <p><strong>User Testing Insight:</strong> Developers appreciated not having to choose "quick query mode" vs. "production mode" upfront. One form with progressive disclosure eliminated decision paralysis.</p>
+            </div>
+
+            <h4>Result Streaming & Viewing</h4>
+            <div class="image-container">
+                <img src="../images/confluent/flinksql/Statements/Application details (overview)-14.png" alt="Statement details showing View Results button and result streaming interface">
+                <p class="image-caption">Result streaming interface - fetch results in browser with changelog/append mode toggle</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Three Statement Types, Three UI Patterns</h4>
+                <ul>
+                    <li><strong>INSERT INTO (Long-Running):</strong> No browser-visible results. Shows "Running" status, resource metrics, Flink Web UI link for monitoring.</li>
+                    <li><strong>Instant Result (SHOW TABLES):</strong> Results appear immediately after submission. No waiting indicator needed.</li>
+                    <li><strong>Fetched Result (SELECT):</strong> Shows "Waiting for results..." indicator (up to 60 seconds), then streams results with scroll capability. Toggle between changelog and append modes.</li>
+                </ul>
+                <p><strong>Persistent Access:</strong> Dell can navigate away during fetch, then return later to see results. Browser remembers statement state.</p>
+            </div>
+
+            <h3>5. Compute Pools (Environment-Scoped)</h3>
+            <p>Omar manages shared and dedicated Flink clusters that execute SQL statements. Each pool defines CPU, memory, replica count, and Flink version. Pools can be shared across multiple statements (cost optimization) or dedicated to single critical workload (performance isolation).</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Compute pools/Compute Pool - Empty state screen.png" alt="Empty state for Compute Pools showing illustration and Add compute pool button">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Compute pools/Compute Pool - Create.png" alt="Create compute pool form - simple view showing pool name, type (shared/dedicated) selection">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Compute pools/Compute Pool - Create (With advanced view).png" alt="Create compute pool form - advanced view with CPU, memory, replicas, Flink version, and YAML configuration editor">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Compute pools/Compute Pool - Create (With advanced view)-1.png" alt="Create compute pool showing cluster spec with resource allocation templates (small, medium, large)">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Compute pools/Compute pool list view.png" alt="Compute pool list showing pool names, CPU/memory allocation, active statements count, Flink version, type, and creation date">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Compute pools/Compute pool list view-1.png" alt="Compute pool list with multiple pools showing resource utilization and statement distribution">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="../images/confluent/flinksql/Compute pools/Env Details - Day 'N'.png" alt="Environment overview showing compute pools section with summary of total pools and resource allocation">
+                    </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Compute pool lifecycle: empty state → simple creation → advanced settings with templates → list view with utilization → environment overview</p>
+
+            <div class="highlight-box">
+                <h4>Template-Based Creation</h4>
+                <p>Compute pool forms come prefilled with production-ready templates (small: 2 CPU/4GB, medium: 4 CPU/8GB, large: 8 CPU/16GB). Omar can accept defaults or customize. Reduces configuration errors and accelerates setup.</p>
+                <h4>Conflict Prevention</h4>
+                <p>When Omar tries to delete a pool with active statements, UI shows 409 Conflict error with list of dependent statements. Guides user to stop statements first, preventing accidental workload interruption.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Delivery & Outcomes -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Delivery & Outcomes</h2>
+
+            <h3>3-Month Execution Timeline</h3>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Month 1: Foundation (Weeks 1-4)</h4>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>✓ Catalogs & Secrets top-level sections designed</li>
+                        <li>✓ Compute Pools environment tab designed</li>
+                        <li>✓ Information architecture finalized with PM/Eng</li>
+                        <li>✓ Progressive disclosure patterns established</li>
+                    </ul>
+                </div>
+                <div class="impact-card">
+                    <h4>Month 2: Core Features (Weeks 5-8)</h4>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>✓ SQL Statement creation form with advanced toggle</li>
+                        <li>✓ Result streaming UX for 3 statement types</li>
+                        <li>✓ Statement list with filters and sort</li>
+                        <li>✓ Local storage for catalog/database persistence</li>
+                    </ul>
+                </div>
+                <div class="impact-card">
+                    <h4>Month 3: Polish (Weeks 9-12)</h4>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>✓ Catalogs in Environments troubleshooting tab</li>
+                        <li>✓ Secret mapping visual indicators & inline fixes</li>
+                        <li>✓ 409 Conflict flows and error handling</li>
+                        <li>✓ User testing with 5 enterprise customers</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 2rem;">
+                <h4>Collaboration Model</h4>
+                <p>Worked closely with 1 PM (product direction), 3 engineers (feasibility validation), and 2 technical writers (documentation). Weekly design reviews with stakeholders ensured alignment. Bi-weekly customer interviews (early access customers) validated usability assumptions.</p>
+                <p><strong>Key Success Factor:</strong> Incremental delivery approach. Rather than big-bang release, we shipped Catalogs/Secrets (Month 1), then Statements (Month 2), then Compute Pools + troubleshooting (Month 3). This allowed customers to start using infrastructure management immediately while SQL execution was still in progress.</p>
+            </div>
+
+            <h3>What We Shipped</h3>
+            <ul>
+                <li><strong>5 New UI Sections:</strong> Catalogs, Secrets, Statements, Compute Pools, Catalogs in Environments</li>
+                <li><strong>20+ User Flows:</strong> Catalog CRUD, secret management, statement execution, result streaming, pool management, secret mapping troubleshooting</li>
+                <li><strong>Progressive Disclosure Everywhere:</strong> Simple defaults visible, advanced options hidden - consistent pattern across all forms</li>
+                <li><strong>Zero CLI Dependency for Omar & Dell:</strong> Both personas can accomplish their core workflows entirely within C3</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Impact & Results</h2>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Closed Competitive Gap</h4>
+                    <p><strong>Achieved</strong> functional equivalence to Flink CLI for SQL operations, <strong>matching</strong> Ververica Platform's catalog browser integration and <strong>matching</strong> Confluent Cloud ksqlDB's result streaming with changelog/append mode toggle.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Accelerated Developer Productivity</h4>
+                    <p><strong>Reduced</strong> onboarding time by 86% (from 2 weeks to 1 day) for SQL developers migrating from ksqlDB. <strong>Eliminated</strong> CLI training requirements. <strong>Reduced</strong> query iteration cycle from 10 minutes to 90 seconds.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Simplified Operations</h4>
+                    <p><strong>Reduced</strong> infrastructure setup time from 2 hours to 15 minutes for operators. <strong>Eliminated</strong> context switching across 4+ CLI tools. <strong>Enabled</strong> troubleshooting with inline guidance instead of kubectl debugging.</p>
+                </div>
+            </div>
+
+            <h3>Business & Strategic Outcomes</h3>
+
+            <div class="highlight-box">
+                <h4>Competitive Positioning Shift</h4>
+                <p>Before FlinkSQL UI, CP Flink was <strong>2-3 years behind</strong> in UX compared to Ververica Platform and Confluent Cloud. Sales conversations stalled on "Where's your SQL UI?" in 60% of enterprise evaluations.</p>
+                <p><strong>After:</strong> FlinkSQL UI brought CP Flink to parity with competitors. Removed major adoption blocker for enterprise customers evaluating self-managed Flink options. Positioned CP Flink as viable alternative to fully managed cloud services for organizations with compliance or cost constraints.</p>
+            </div>
+
+            <h3>User Feedback from Early Access Customers</h3>
+            <ul>
+                <li><strong>Financial Services Customer:</strong> "This is exactly what we needed. Our team can now manage Flink without specialized training. The catalog troubleshooting saved us hours of debugging."</li>
+                <li><strong>Retail Analytics Team:</strong> "Coming from ksqlDB, the SQL editor feels familiar. The result streaming works just like Cloud. Onboarding new developers went from 2 weeks to 1 day."</li>
+                <li><strong>Manufacturing IoT Platform:</strong> "Progressive disclosure is perfect. Our junior developers use simple mode, senior engineers can access advanced configs when needed. One UI for everyone."</li>
+            </ul>
+
+            <h3>Design System Contribution</h3>
+            <p>Beyond feature delivery, this project established reusable patterns for CP Flink UI:</p>
+            <ul>
+                <li><strong>Progressive Disclosure Pattern:</strong> Simple default → Advanced toggle → Applied across 5+ subsequent CP Flink features</li>
+                <li><strong>Empty State Guidelines:</strong> Illustration + CTA + Educational text → Now standard across C3</li>
+                <li><strong>Multi-Step Carousel Pattern:</strong> Used for secret mapping flows → Reused in Artifact Management project</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Learnings -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Key Learnings & Challenges</h2>
+
+            <h3>Balancing Two Personas</h3>
+            <p>Omar and Dell have overlapping but distinct needs. Omar cares about resource management, Dell cares about query execution. The challenge was creating clear information scent - when Dell opens SQL Statements, he shouldn't be overwhelmed by compute pool configurations.</p>
+
+            <p>Solution: Clear tab separation (Statements, Compute Pools, Catalogs) with defaults inheritance. Dell can ignore Compute Pools tab entirely if defaults are set.</p>
+
+            <h3>Materialized Tables Mental Model</h3>
+            <p>Confluent Cloud is shifting from statement-centric to materialized-table-centric UX. Statements become short-lived resources, materialized tables are business-critical monitored resources. In C3, we're maintaining statement prominence for V1 but designing table structure to accommodate future pivot.</p>
+
+            <h3>Result Streaming Complexity</h3>
+            <p>Three statement types (INSERT INTO, instant result, fetched result) each need different result handling. INSERT INTO produces no browser-visible results. Instant results appear immediately. Fetched results require WebSocket-like streaming.</p>
+
+            <p>Designing one form that handles all three cleanly required careful state management and clear user feedback about what to expect.</p>
+
+            <div class="highlight-box">
+                <h4>What I'd Improve</h4>
+                <p>Earlier prototype of result streaming would have caught edge cases around "what happens when user navigates away during fetch then returns". We designed for it, but interactive prototype would have validated assumptions sooner.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Work -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Future Work</h2>
+
+            <ul>
+                <li><strong>Materialized Tables:</strong> Introduce as first-class resource, potentially making Statements less prominent</li>
+                <li><strong>SQL Editor Enhancements:</strong> Autocomplete, schema browser sidebar, query history</li>
+                <li><strong>Metrics in C3 UI:</strong> Bring statement/compute pool metrics visualization into C3</li>
+                <li><strong>Artifact Management Integration:</strong> Reference custom JARs in SQL statements via UI</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="project-section">
+        <div class="container-small">
+            <a href="index.html#work" class="back-link">← Back to all projects</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Abhilash Bhattacharjee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/project-protection.js"></script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMF Web UI Foundation - Abhilash Bhattacharjee</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">Abhilash Bhattacharjee</a>
+            <div style="display: flex; align-items: center;">
+                <div class="nav-links">
+                    <a href="../index.html#work">Work</a>
+                    <a href="../index.html#about">About</a>
+                    <a href="../index.html#contact">Contact</a>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon theme-icon-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg class="theme-icon theme-icon-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <p class="breadcrumb">
+                <a href="../index.html">Home</a> / <a href="index.html#work">Work</a> / CMF Web UI Foundation
+            </p>
+
+            <h1>CMF Web UI in Control Center for Job Lifecycle Management</h1>
+            <p class="hero-subtitle"><strong>Designed</strong> foundational web interface for Confluent Manager for Apache Flink (CMF) integrated into Control Center, <strong>establishing</strong> core UX patterns and information architecture that <strong>enabled</strong> zero-CLI Flink operations for 125+ enterprise operators while <strong>supporting</strong> 30+ subsequent feature additions.</p>
+
+            <div class="project-meta-info">
+                <div class="meta-item">
+                    <span class="meta-label">Role</span>
+                    <span class="meta-value">Lead Designer</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Timeline</span>
+                    <span class="meta-value">2025 (Strategic Initiative)</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-value">In Progress</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Team</span>
+                    <span class="meta-value">10 members</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Program Overview</h2>
+            <p>Confluent Manager for Apache Flink (CMF) handles Flink cluster deployment, job lifecycle management, RBAC integration, and licensing for Confluent Platform Flink. Initially, CMF only offered CLI and REST API interfaces - limiting accessibility for operators and developers who prefer graphical interfaces.</p>
+
+            <p>The CMF Web UI program introduced a standalone user interface integrated into Confluent Control Center, positioning CP Flink as a viable alternative to Confluent Cloud's fully managed Flink service while competing with open-source alternatives like Ververica Platform and Cloudera.</p>
+
+            <div class="image-placeholder">
+                [Screenshot: C3 Flink Section Overview]
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategic Context -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Strategic Context</h2>
+
+            <h3>Business Objectives</h3>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Address Usability Challenges</h4>
+                    <p>Flink Kubernetes Application Mode creates 1-1 mapping between jobs and clusters. Without UI, operators must surface information about entire fleets of running applications via CLI/API.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Reaccelerate Platform Adoption</h4>
+                    <p>Position CP Flink as premier self-managed alternative. Stimulate Confluent Platform uptake through useful management tooling.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Spearhead Stream Processing Innovation</h4>
+                    <p>Position Confluent as thought leader in evolving stream processing technologies and practices.</p>
+                </div>
+            </div>
+
+            <h3>Competitive Analysis</h3>
+            <p>CMF without UI executes Flink jobs in Application Mode via Flink K8s operator but limits management to REST API and CLI. This hides CMF behind poor UX compared to competitors:</p>
+
+            <ul>
+                <li><strong>Open Source Flink:</strong> Has web UI for job monitoring and deployment</li>
+                <li><strong>Ververica Platform:</strong> Sophisticated UI for Flink deployment and monitoring</li>
+                <li><strong>Cloudera:</strong> Web UI for Flink on YARN</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>Key Insight</h4>
+                <p>Apache Flink has web UI for monitoring. CMF executes jobs in Application Mode which serves to hide functionality like uploading JAR and launching jobs. When run in Flink K8s application mode, the Flink UI cannot see all jobs in a K8s environment, necessitating higher-level UI.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Goals -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>UI Design Goals</h2>
+
+            <h3>Goal 1: Separate Development and Operations</h3>
+            <p>Lower barrier for operations. Allow organizations to separate roles of developer and application administrators for Apache Flink. Make CMF and Apache Flink deployments more accessible to non-Flink specialists.</p>
+
+            <p>UI should offer ability to create, update, and destroy Flink environments and applications with minimal required specialized training.</p>
+
+            <h3>Goal 2: Codify Operational Best Practices</h3>
+            <p>Improve quality and reliability of Flink deployments, reducing level of error in Flink operations.</p>
+
+            <p>CMF addresses this by allowing administrators to specify application and environment-level defaults governing settings like resource consumption, parallelism, and Flink configurations. UI makes these settings available to less specialized operational staff without requiring alterations to application code.</p>
+
+            <h3>Goal 3 (Long Term): Interactive SQL Development</h3>
+            <p>Improve Confluent customer experiences and codify best practices with CP Flink by offering interactive SQL development workspace consistent with Confluent Cloud.</p>
+
+            <p>Confluent Cloud offers SQL interactive development environment and UDF support. Incorporation of standalone web UI would bring capability to CP Flink. A SQL web UI could lower skill level required to deploy Flink jobs.</p>
+
+            <h3>Goal 4 (Long Term): Unify CC, C3, and CMF UX via Project Setu</h3>
+            <p>Over time, incorporate CMF UI into broader Control Center and Confluent Cloud User Experience across Confluent.</p>
+        </div>
+    </section>
+
+    <!-- User Personas -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>User Personas Served</h2>
+
+            <div class="highlight-box">
+                <div class="persona-card">
+                    <div class="persona-image">
+                        <img src="../images/confluent/Omar.png" alt="Omar the Operator">
+                    </div>
+                    <div class="persona-content">
+                        <h4>Primary Persona: Omar the Operator 📊</h4>
+                        <p>First revision of UI geared exclusively towards Flink cluster deployment and operations. The only persona served is <strong>Omar the Operator</strong> who manages the company's streaming infrastructure, ensures system health, and provides development teams with the tools they need.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>User Flow 0: Licensing</h4>
+                <p>Confluent wants Omar to provide and confirm valid Confluent Platform license so that Confluent can properly determine entitlement status.</p>
+                <ul>
+                    <li>Omar heads to licensing page</li>
+                    <li>Page shows whether or not there is valid license</li>
+                    <li>Omar clicks link to upload license or paste/upload valid license string</li>
+                </ul>
+            </div>
+
+            <h3>Core User Flows</h3>
+            <ul>
+                <li><strong>Flow 1:</strong> Manage Flink Environments (view list, access details, create, update defaults)</li>
+                <li><strong>Flow 2:</strong> Manage Flink Applications (view list, access details, launch, update configuration)</li>
+                <li><strong>Flow 3:</strong> Fine-tune environment defaults and application configurations for real-world deployment, troubleshooting, and sizing</li>
+            </ul>
+
+            <div class="image-placeholder">
+                [Flow Diagram: Omar's User Journey]
+            </div>
+        </div>
+    </section>
+
+    <!-- My Contribution -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Design Work Across Program</h2>
+
+            <p>As the lead designer for CP Flink's Control Center integration, my work spanned multiple releases and features within this broader CMF Web UI program:</p>
+
+            <h3>Foundation (2025)</h3>
+            <ul>
+                <li>Established C3 information architecture for Flink section</li>
+                <li>Designed Environments and Applications management patterns</li>
+                <li>Created design system patterns for Flink resource cards, filters, and detail views</li>
+            </ul>
+
+            <h3>Feature Development (2025 Q4 - 2026 Q1)</h3>
+            <ul>
+                <li><strong>Savepoint Management:</strong> Visual savepoint workflows for disaster recovery</li>
+                <li><strong>FlinkSQL UI:</strong> Comprehensive SQL workspace with catalogs, secrets, compute pools</li>
+                <li><strong>Multi-K8s Support:</strong> Hub-and-spoke architecture for cross-cloud deployments</li>
+                <li><strong>Session Clusters:</strong> Shared compute pools for cost optimization</li>
+                <li><strong>Artifact Management:</strong> JAR/ZIP/Python file upload and management</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>Design Philosophy</h4>
+                <p>Throughout this program, maintained focus on progressive disclosure (simple defaults, advanced options available) and dual persona support (operators managing infrastructure, developers executing workloads).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Program Impact</h2>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Competitive Positioning</h4>
+                    <p>Closed UX gaps with Ververica Platform and Cloudera, removing major barrier in enterprise sales conversations.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Operational Accessibility</h4>
+                    <p>Enabled organizations to separate developer and operator roles - operators can manage Flink without Java/Scala expertise.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Platform Adoption</h4>
+                    <p>Lowered barrier to entry for Confluent Platform Flink adoption, particularly in regulated industries where CLI tools are restricted.</p>
+                </div>
+            </div>
+
+            <h3>Strategic Outcomes</h3>
+            <p>CMF Web UI in C3 positions CP Flink as viable self-managed alternative to Confluent Cloud. Organizations with security, compliance, or cost constraints can deploy Flink on-premises while maintaining cloud-like user experience.</p>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="project-section">
+        <div class="container-small">
+            <a href="index.html#work" class="back-link">← Back to all projects</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Abhilash Bhattacharjee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/project-protection.js"></script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

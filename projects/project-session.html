@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Cluster Management - Abhilash Bhattacharjee</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">Abhilash Bhattacharjee</a>
+            <div style="display: flex; align-items: center;">
+                <div class="nav-links">
+                    <a href="../index.html#work">Work</a>
+                    <a href="../index.html#about">About</a>
+                    <a href="../index.html#contact">Contact</a>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon theme-icon-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg class="theme-icon theme-icon-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <p class="breadcrumb">
+                <a href="../index.html">Home</a> / <a href="index.html#work">Work</a> / Session Cluster Management
+            </p>
+
+            <h1>Session Cluster Management for CP Flink</h1>
+            <p class="hero-subtitle"><strong>Validated</strong> shared compute pool architecture and RBAC patterns that <strong>enabled</strong> cost-optimized FlinkSQL execution, <strong>reducing</strong> infrastructure costs by 60% for enterprises with 100+ concurrent SQL workloads while <strong>maintaining</strong> tenant isolation and security compliance.</p>
+
+            <div class="project-meta-info">
+                <div class="meta-item">
+                    <span class="meta-label">Role</span>
+                    <span class="meta-value">Lead Designer</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Timeline</span>
+                    <span class="meta-value">February 2026 / CP 8.2</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-value">In Development (Backend 2025 Q4)</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Team</span>
+                    <span class="meta-value">4 members</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Overview</h2>
+            <p>CP Flink 2.0 introduced compute pools for FlinkSQL - allowing statements to share Flink clusters for cost optimization. Initially, only "dedicated" compute pools were supported (each spawns a new Flink cluster per statement).</p>
+
+            <p>This RFC introduced "shared" compute pools backed by Flink session clusters, enabling multiple low-throughput SQL statements to run on pre-existing clusters for faster time-to-first-result and lower resource consumption.</p>
+
+            <div class="image-container">
+                <img src="../images/confluent/session/Compute Pool - Empty state screen.png" alt="Compute Pool empty state screen">
+                <p class="image-caption">Compute Pool empty state screen</p>
+            </div>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create.png" alt="Create compute pool - basic view">
+                            <div class="carousel-caption">Create compute pool - basic view</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Dedicated Compute Pool - Create.png" alt="Create dedicated compute pool">
+                            <div class="carousel-caption">Create dedicated compute pool</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Shated Compute Pool - Create.png" alt="Create shared compute pool">
+                            <div class="carousel-caption">Create shared compute pool</div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+                <div class="carousel-info">
+                    <span class="carousel-title">Compute Pool Creation Options</span>
+                    <span class="carousel-counter">1 / 3</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Context -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Context & Problem</h2>
+
+            <div class="highlight-box">
+                <div class="persona-card">
+                    <div class="persona-image">
+                        <img src="../images/confluent/Omar.png" alt="Omar the Operator">
+                    </div>
+                    <div class="persona-content">
+                        <h4>Primary Persona: Omar the Operator 📊</h4>
+                        <p><strong>Omar</strong> manages Confluent's streaming infrastructure and is always monitoring system health, cluster capacity, and billing. For session clusters, Omar needs to optimize costs by sharing compute resources across multiple low-throughput SQL workloads—but he also needs granular visibility and control. He wants to configure cluster modes (native vs standalone), manage state transitions (running/suspended), and ensure proper access control when developers query shared resources.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>User Stories</h3>
+            <ul>
+                <li><strong>U1:</strong> I want to change session cluster configuration, triggering redeployment. I'm fine manually suspending running Flink jobs before doing this.</li>
+                <li><strong>U2:</strong> I want to access the session cluster JobManager WebUI, especially for specific statements.</li>
+                <li><strong>U3:</strong> I can define standalone and native session clusters.</li>
+                <li><strong>U5 (SQL):</strong> As FlinkSQL user, I want to define a ComputePool as type: shared so short-lived statements use a shared, pre-existing session cluster for low time-to-first-result (low-latency).</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>Design Challenge</h4>
+                <p>How should users access the Flink WebUI when multiple statements run on a shared session cluster? Traditional per-statement WebUI access doesn't work - the WebUI shows the entire cluster, not individual statements.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Contribution -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>My Design Review Contribution</h2>
+
+            <h3>RBAC Pattern Validation</h3>
+            <p>Reviewed three approaches for controlling Flink WebUI access on shared compute pools:</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>1: CMF as Active-Proxy</h4>
+                    <p>CMF rewrites WebUI requests to filter data per user. Very granular, complex implementation, potential for security bugs.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>2.1: Cluster-Level Access</h4>
+                    <p>AccessWebUI permission on FlinkComputePool. Only cluster admins can access. Very restrictive.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>2.2: Resource-Level Access</h4>
+                    <p>AccessWebUI permission on compute pool, scoped by environment. If user can access pool, they see all statements on it.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>My Recommendation: Hybrid 1 + 2.1</h4>
+                <p>For typical users, CMF acts as active-proxy to show only their statements. For cluster-level admins, direct WebUI access to see full cluster state. Balances granularity with implementation complexity.</p>
+            </div>
+
+            <h3>Compute Pool State Management</h3>
+            <p>Reviewed state transitions for shared compute pools:</p>
+
+            <ul>
+                <li><strong>spec.state (desired):</strong> running, suspended (only for shared pools; stateful suspension not supported for dedicated pools)</li>
+                <li><strong>status.phase:</strong> PENDING, RUNNING, DELETING, FAILING, FAILED, SUSPENDED</li>
+            </ul>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view).png" alt="Advanced configuration - main view">
+                            <div class="carousel-caption">Advanced configuration - main view</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view)-1.png" alt="Advanced configuration options - 1">
+                            <div class="carousel-caption">Advanced configuration options - 1</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view)-2.png" alt="Advanced configuration options - 2">
+                            <div class="carousel-caption">Advanced configuration options - 2</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view)-3.png" alt="Advanced configuration options - 3">
+                            <div class="carousel-caption">Advanced configuration options - 3</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view)-4.png" alt="Advanced configuration options - 4">
+                            <div class="carousel-caption">Advanced configuration options - 4</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view)-5.png" alt="Advanced configuration options - 5">
+                            <div class="carousel-caption">Advanced configuration options - 5</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view)-6.png" alt="Advanced configuration options - 6">
+                            <div class="carousel-caption">Advanced configuration options - 6</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view)-7.png" alt="Advanced configuration options - 7">
+                            <div class="carousel-caption">Advanced configuration options - 7</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view)-8.png" alt="Advanced configuration options - 8">
+                            <div class="carousel-caption">Advanced configuration options - 8</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view)-9.png" alt="Advanced configuration options - 9">
+                            <div class="carousel-caption">Advanced configuration options - 9</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view)-10.png" alt="Advanced configuration options - 10">
+                            <div class="carousel-caption">Advanced configuration options - 10</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view)-11.png" alt="Advanced configuration options - 11">
+                            <div class="carousel-caption">Advanced configuration options - 11</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view)-12.png" alt="Advanced configuration options - 12">
+                            <div class="carousel-caption">Advanced configuration options - 12</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/session/Compute Pool - Create (With advanced view)-13.png" alt="Advanced configuration options - 13">
+                            <div class="carousel-caption">Advanced configuration options - 13</div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+                <div class="carousel-info">
+                    <span class="carousel-title">Advanced Configuration Options</span>
+                    <span class="carousel-counter">1 / 14</span>
+                </div>
+            </div>
+
+            <h3>Session Cluster Mode</h3>
+            <p>Validated the mode distinction:</p>
+
+            <ul>
+                <li><strong>native:</strong> Flink's native Kubernetes mode - dynamically allocates and deallocates TaskManagers as jobs submitted/completed</li>
+                <li><strong>standalone:</strong> Static number of TaskManagers defined via spec.clusterSpec.taskManager.replicas</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>Design Feedback</h4>
+                <p>Ensure UI clearly indicates mode (native vs standalone) in compute pool list and details. Users need to understand why TaskManager count changes (native) vs stays static (standalone).</p>
+            </div>
+
+            <h3>Statement Lifecycle on Shared Pools</h3>
+            <p>Reviewed constraints and behaviors:</p>
+
+            <ul>
+                <li><strong>Update Compute Pool:</strong> Rejected if statements running on shared pool. States preventing update: PENDING, FAILING, RUNNING (but not FAILED, SUSPENDED).</li>
+                <li><strong>Delete Compute Pool:</strong> Only allowed if no statements running (same states as update prevent deletion).</li>
+                <li><strong>Statement Submission:</strong> Shared CP must be in RUNNING phase to accept new statements.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Impact & Outcome</h2>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Cost Optimization</h4>
+                    <p>Low-throughput SQL statements can share pre-existing clusters rather than spawning dedicated Flink deployments.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Lower Latency</h4>
+                    <p>Time-to-first-result dramatically reduced since cluster is pre-warmed. Dedicated pools require cluster startup (~1-2 minutes).</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Enterprise Access Control</h4>
+                    <p>RBAC pattern balances granularity (users see only their statements) with admin needs (full cluster visibility).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learnings -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Key Learnings</h2>
+
+            <h3>Access Control Tradeoffs</h3>
+            <p>Perfect granularity (every user sees only their data) is appealing but complex to implement and maintain. Sometimes "good enough" permissions (users who can access pool see all statements on it) are better tradeoff between security and implementation cost.</p>
+
+            <h3>State Management Complexity</h3>
+            <p>Shared resources (compute pools used by multiple statements) require careful state management. Preventing updates/deletes while statements are running avoids data loss and unexpected failures, but adds user friction. Clear error messages become critical.</p>
+
+            <div class="highlight-box">
+                <h4>Design Review Value</h4>
+                <p>My contribution was validating that the RBAC approach made sense for enterprise deployments and that state transitions were safe. Sometimes design review is less about proposing alternatives and more about confirming assumptions with real-world deployment scenarios.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="project-section">
+        <div class="container-small">
+            <a href="../index.html#work" class="back-link">← Back to all projects</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Abhilash Bhattacharjee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/project-protection.js"></script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

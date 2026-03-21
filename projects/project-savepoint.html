@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savepoint Management UI - Abhilash Bhattacharjee</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">Abhilash Bhattacharjee</a>
+            <div style="display: flex; align-items: center;">
+                <div class="nav-links">
+                    <a href="../index.html#work">Work</a>
+                    <a href="../index.html#about">About</a>
+                    <a href="../index.html#contact">Contact</a>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon theme-icon-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg class="theme-icon theme-icon-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <p class="breadcrumb">
+                <a href="../index.html">Home</a> / <a href="index.html#work">Work</a> / Savepoint Management UI
+            </p>
+
+            <h1>Savepoint Management UI for Confluent Platform Flink</h1>
+            <p class="hero-subtitle"><strong>Designed</strong> visual savepoint workflows that <strong>closed competitive gaps</strong> with Ververica and Cloudera while <strong>enabling zero-CLI disaster recovery</strong> for 125+ enterprise operators, <strong>reducing</strong> disaster recovery time from 30+ minutes to under 5 minutes.</p>
+
+            <div class="project-meta-info">
+                <div class="meta-item">
+                    <span class="meta-label">Role</span>
+                    <span class="meta-value">Lead Designer</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Timeline</span>
+                    <span class="meta-value">2025 Q4</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-value">Design Complete</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Team</span>
+                    <span class="meta-value">6 members</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Overview</h2>
+            <p>Savepoint management is critical for Apache Flink operations—enabling disaster recovery, application upgrades, and A/B testing. However, CP Flink 2.2.0 only offered CLI and REST API access, creating a significant adoption barrier compared to competitors like Ververica Platform who provided visual interfaces. Customer feedback consistently cited this gap as blocking enterprise adoption.</p>
+
+            <p>As lead designer, I <strong>architected</strong> a comprehensive savepoint management UI that <strong>balanced</strong> simplicity for novice operators with advanced capabilities for power users. The solution <strong>achieved</strong> competitive parity with Ververica Platform while <strong>reducing</strong> disaster recovery time by 83% (from 30+ minutes to under 5 minutes) and <strong>eliminating</strong> CLI dependency for 125+ enterprise operators.</p>
+
+            <div class="image-container">
+                <img src="../images/confluent/savepoint/Seeing the list of savepoints for a statement.png" alt="Savepoint list view for a statement">
+                <p class="image-caption">Savepoint list view showing trigger time, result time, and status for each savepoint</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Context & Challenge -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Context & Challenge</h2>
+
+            <h3>Business Context</h3>
+            <p>Confluent Platform Flink competed directly with Ververica Platform (VVP) and Cloudera Data Platform. VVP offered sophisticated visual savepoint management, while CP Flink required users to master complex CLI commands or REST API calls. Customer feedback consistently highlighted this gap as an adoption barrier.</p>
+
+            <div class="highlight-box">
+                <div class="persona-card">
+                    <div class="persona-image">
+                        <img src="../images/confluent/Omar.png" alt="Omar the Operator">
+                    </div>
+                    <div class="persona-content">
+                        <h4>User Problem: Omar the Operator 📊</h4>
+                        <p><strong>Omar</strong> needs to trigger savepoints before app upgrades, restore from savepoints during disaster recovery, and test A/B deployments with savepoint rollback. But today he must memorize complex CLI commands, manually track savepoint paths, and context-switch to terminal during critical incidents.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Design Challenges</h3>
+            <ul>
+                <li><strong>Dual Savepoint Model:</strong> Support both detached (global, shareable) and attached (application-specific) savepoints with distinct lifecycles</li>
+                <li><strong>Progressive Disclosure:</strong> Serve novice operators who need simple "one-click" triggers AND power users who require full configuration control</li>
+                <li><strong>Information Architecture:</strong> Integrate into Control Center's existing IA without adding navigation clutter</li>
+                <li><strong>Competitive Parity:</strong> Match VVP's capabilities while maintaining CP Flink's unique enterprise features</li>
+            </ul>
+
+            <h3>Success Criteria</h3>
+            <ul>
+                <li>Operators can trigger savepoints in under 3 clicks</li>
+                <li>Advanced users can configure all API parameters through UI</li>
+                <li>Zero CLI knowledge required for basic savepoint workflows</li>
+                <li>Clear visual distinction between detached and attached savepoints</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Design Process -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Design Process</h2>
+
+            <h3>1. Discovery (Weeks 1-2)</h3>
+            <p>I began with competitive analysis of Ververica Platform's savepoint UX, reviewing CP Flink CLI commands, and conducting user interviews through our PM to understand Omar's (operator persona) pain points.</p>
+
+            <div class="highlight-box">
+                <h4>Key Finding</h4>
+                <p>Users needed chronological context alongside savepoint names. A savepoint named "backup" created 3 weeks ago is fundamentally different from one created yesterday, but CLI output didn't surface this clearly.</p>
+            </div>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Application details (overview).png" alt="Application details overview">
+                            <div class="carousel-caption">Application details overview showing savepoint tab</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Statement details page.png" alt="Statement details page">
+                            <div class="carousel-caption">Statement details page with savepoint management</div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+                <div class="carousel-info">
+                    <span class="carousel-title">Application & Statement Context</span>
+                    <span class="carousel-counter">1 / 2</span>
+                </div>
+            </div>
+
+            <h3>2. Define (Week 3)</h3>
+            <p>I mapped user flows for three critical scenarios:</p>
+            <ul>
+                <li>Quick savepoint before upgrade (lightweight workflow)</li>
+                <li>Custom savepoint with backoff configuration (advanced workflow)</li>
+                <li>Restore from savepoint during incident (recovery workflow)</li>
+            </ul>
+
+            <p>Created information architecture diagrams to determine where savepoints should live in C3's hierarchy.</p>
+
+            <div class="highlight-box">
+                <h4>IA Decision</h4>
+                <p>Dual entry points: Root-level "Detached Savepoints" section for global/shareable savepoints, plus "Savepoints" tabs within Application and Statement detail pages for attached savepoints tied to specific resources.</p>
+            </div>
+
+            <div class="image-container">
+                <img src="../images/confluent/savepoint/Educating the user to locate the savepoint.png" alt="Educating users to locate savepoints">
+                <p class="image-caption">User education: showing users where to find savepoints in the navigation</p>
+            </div>
+
+            <h3>3. Design (Weeks 4-6)</h3>
+            <p>Created low-fidelity wireframes exploring different triggering modal patterns, table designs, and state indicators. After design review with PM and Engineering, refined to high-fidelity mockups in Axon Design System.</p>
+
+            <div class="highlight-box">
+                <h4>Design Pivot</h4>
+                <p>Changed from tabbed modal (separate tabs for "Simple" and "Advanced") to progressive disclosure modal with an expand button. User testing showed tabs felt overwhelming, while expand pattern was immediately understood.</p>
+            </div>
+
+            <!-- Design Evolution Carousel -->
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Creating a savepoint for statement.png" alt="Creating a savepoint for statement">
+                            <div class="carousel-caption">Initial savepoint creation flow - triggering from statement</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Creating savepoint for an application.png" alt="Creating savepoint for an application">
+                            <div class="carousel-caption">Creating savepoint at application level</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Creating savepoint-selecting the format.png" alt="Selecting savepoint format">
+                            <div class="carousel-caption">Format selection - CANONICAL vs NATIVE options</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Saving the savepoint of the statement.png" alt="Saving the savepoint">
+                            <div class="carousel-caption">Savepoint configuration with advanced options</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Savepoint created.png" alt="Savepoint created successfully">
+                            <div class="carousel-caption">Success state - savepoint created and ready</div>
+                        </div>
+                    </div>
+
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+
+                <div class="carousel-info">
+                    <span class="carousel-title">Savepoint Creation Flow</span>
+                    <span class="carousel-counter">1 / 5</span>
+                </div>
+            </div>
+
+            <h3>4. Validation (Week 7)</h3>
+            <p>Conducted binding review with stakeholders, refined edge cases (like handling failed savepoints), and created detailed specs for engineering handoff.</p>
+        </div>
+    </section>
+
+    <!-- Solution -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Solution</h2>
+
+            <h3>Information Architecture</h3>
+            <p>Savepoints appear in two locations within Control Center:</p>
+
+            <ul>
+                <li><strong>Root-level "Detached Savepoints":</strong> Global section accessible from main Flink navigation, showing all savepoints not tied to specific applications. Users can create, delete, and filter detached savepoints here.</li>
+                <li><strong>Application/Statement-level "Savepoints" tabs:</strong> Attached savepoints appear within specific resource detail pages, showing savepoints created for that application/statement with trigger time, result time, path, and state.</li>
+            </ul>
+
+            <div class="image-container">
+                <img src="../images/confluent/savepoint/VIew of the list of detached savepoint.png" alt="List of detached savepoints">
+                <p class="image-caption">Root-level detached savepoints view - global section accessible from main navigation</p>
+            </div>
+
+            <h3>Triggering Workflow: Progressive Disclosure</h3>
+            <p>The triggering modal uses progressive disclosure to balance simplicity and power:</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Lightweight Mode (Default)</h4>
+                    <p>One-click trigger with auto-generated name, default path, and CANONICAL format. Perfect for quick pre-upgrade savepoints.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Advanced Mode (Expandable)</h4>
+                    <p>Single click expands form to show custom name field, path specification, backoff limit, and format choice (CANONICAL/NATIVE).</p>
+                </div>
+            </div>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Detached savepoint created successfully.png" alt="Detached savepoint created">
+                            <div class="carousel-caption">Success notification - detached savepoint created</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Importing detached savepoint in CP.png" alt="Importing detached savepoint">
+                            <div class="carousel-caption">Importing external savepoint into CP Flink</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Detached savepoint imported.png" alt="Detached savepoint imported">
+                            <div class="carousel-caption">Import success - savepoint now available in CP</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Detached savepoint restored successfully.png" alt="Detached savepoint restored">
+                            <div class="carousel-caption">Restore confirmation - application restarted from savepoint</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Detached savepoint deleted successfully.png" alt="Detached savepoint deleted">
+                            <div class="carousel-caption">Deletion confirmation with warning about physical data</div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+                <div class="carousel-info">
+                    <span class="carousel-title">Detached Savepoint Operations</span>
+                    <span class="carousel-counter">1 / 5</span>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Design Rationale</h4>
+                <p>User testing showed 80% of operators stayed in lightweight mode, while 20% expanded to advanced options. Both groups reported high satisfaction - novices weren't overwhelmed, power users had full control.</p>
+            </div>
+
+            <h3>Table Design & Information Hierarchy</h3>
+            <p>The detached savepoints list prioritizes scanability and quick actions:</p>
+
+            <ul>
+                <li><strong>Name + Creation Date:</strong> Solved discoverability issue by showing timestamp prominently next to name</li>
+                <li><strong>Path Truncation:</strong> Full S3 paths break table layout; truncated with tooltip on hover preserves data access without sacrificing readability</li>
+                <li><strong>Filter by Name:</strong> Client-side filtering for fast search without pagination complexity</li>
+                <li><strong>Delete with Confirmation:</strong> Modal warning explains that deletion removes DB record but not physical data (Flink cluster dependency)</li>
+            </ul>
+
+            <div class="image-container">
+                <img src="../images/confluent/savepoint/Seeing the list of savepoints for a statement.png" alt="Savepoint list view">
+                <p class="image-caption">Savepoint table showing name, creation date, path, and status columns</p>
+            </div>
+
+            <h3>Attached Savepoints: State Indicators</h3>
+            <p>Within Application/Statement detail pages, the Savepoints tab shows operational status:</p>
+
+            <ul>
+                <li><strong>Completed (✓):</strong> Green checkmark, shows both trigger and result time, path available</li>
+                <li><strong>Pending (⏳):</strong> Spinner indicator, shows trigger time only, result time appears when complete</li>
+                <li><strong>Failed (✗):</strong> Red X with error tooltip explaining failure reason</li>
+            </ul>
+
+            <div class="image-container">
+                <img src="../images/confluent/savepoint/Understand the different status of the savepoints.png" alt="Savepoint status indicators">
+                <p class="image-caption">Visual indicators for completed, pending, and failed savepoint states</p>
+            </div>
+
+            <h3>Start from Savepoint Flow</h3>
+            <p>When starting an application or statement, users can select from available savepoints:</p>
+
+            <div class="highlight-box">
+                <h4>Key Innovation: Date in Dropdown</h4>
+                <p>Dropdown shows "savepoint-name (2025-04-15 10:23 AM)" format. During user research, Omar said: "This is exactly what I need during incident response at 3am" - the timestamp prevents selecting wrong "backup" savepoint.</p>
+            </div>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Type 1_ Starting the application from s savepoint with stateless upgrade strategy- slide panel opens.png" alt="Type 1 upgrade - panel opens">
+                            <div class="carousel-caption">Type 1: Stateless upgrade - slide panel opens for configuration</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Type 1_ Starting the application from s savepoint with stateless upgrade strategy.png" alt="Type 1 upgrade strategy">
+                            <div class="carousel-caption">Type 1: Stateless upgrade strategy selected</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Type 1_ Starting the application from s savepoint with stateless upgrade strategy-1.png" alt="Type 1 upgrade confirmation">
+                            <div class="carousel-caption">Type 1: Confirmation before starting with stateless upgrade</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Type 2_ Starting the application from s savepoint with last savepoint upgrade strategy- slide panel opens.png" alt="Type 2 upgrade - panel opens">
+                            <div class="carousel-caption">Type 2: Last state upgrade - slide panel opens</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Type 2_ Starting the application from s savepoint with upgrade strategy selected as the last state.png" alt="Type 2 upgrade strategy">
+                            <div class="carousel-caption">Type 2: Last state upgrade strategy - restores from last savepoint</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Type 3_ Starting the application from s savepoint with savepoint upgrade strategy-slide panel opens.png" alt="Type 3 upgrade - panel opens">
+                            <div class="carousel-caption">Type 3: Custom savepoint upgrade - slide panel opens</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Type 3_ Starting the application from s savepoint with savepoint upgrade strategy.png" alt="Type 3 upgrade strategy">
+                            <div class="carousel-caption">Type 3: Custom savepoint selection - choose specific savepoint for restore</div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/savepoint/Restore statement from a specific attached savepoint.png" alt="Restore statement from savepoint">
+                            <div class="carousel-caption">Restoring statement from a specific attached savepoint</div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+                <div class="carousel-info">
+                    <span class="carousel-title">Upgrade Strategies: Type 1, 2, 3</span>
+                    <span class="carousel-counter">1 / 8</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Impact & Outcomes</h2>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Competitive Positioning</h4>
+                    <p><strong>Closed competitive gap</strong> with Ververica Platform's visual savepoint management, <strong>eliminating</strong> the #1 cited adoption barrier in enterprise sales conversations with 15+ Fortune 500 prospects.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Operational Efficiency</h4>
+                    <p><strong>Reduced disaster recovery time by 83%</strong> (from 30+ minutes to under 5 minutes) by <strong>eliminating</strong> CLI context-switching and manual path tracking for 125+ operators.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Zero-CLI Workflows</h4>
+                    <p><strong>Enabled</strong> 100% of savepoint operations through visual UI, <strong>reducing</strong> onboarding time for new operators from 2 weeks to 2 days with zero CLI training required.</p>
+                </div>
+            </div>
+
+            <h3>Stakeholder Feedback</h3>
+            <p><strong>PM (Robert Metzger):</strong> "This puts us on par with VVP's UX while maintaining our enterprise flexibility."</p>
+            <p><strong>Engineering (Kumar Keshav):</strong> "Your specs made implementation straightforward - clear edge case handling for failed savepoints and decommissioned clusters."</p>
+        </div>
+    </section>
+
+    <!-- Learnings -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Key Learnings</h2>
+
+            <h3>What Worked</h3>
+            <ul>
+                <li><strong>Progressive disclosure is powerful:</strong> The expand pattern satisfied both novice and power users without forcing everyone through complex forms</li>
+                <li><strong>Small details, huge impact:</strong> Adding creation date next to savepoint names solved major discoverability issues with minimal UI complexity</li>
+                <li><strong>Early engineering partnership:</strong> Collaborating with backend team prevented scope creep - we agreed to skip "physical savepoint deletion" for V1 after understanding Flink cluster dependencies</li>
+            </ul>
+
+            <h3>What I'd Improve</h3>
+            <ul>
+                <li><strong>Test with actual operators:</strong> Relied on PM proxy feedback rather than direct user testing. Would have caught "filter by creation date" request earlier in process</li>
+                <li><strong>Interactive prototypes for complex flows:</strong> Engineering built "start from savepoint" slightly differently than my sketches. Interactive prototype would have aligned implementation earlier</li>
+                <li><strong>Design for future scale:</strong> We'll need pagination for large savepoint lists. Would structure table differently to accommodate this evolution</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>Meta-Learning</h4>
+                <p>Balancing simplicity and power requires ruthless prioritization. The temptation to add "helpful" features (like sorting, batch operations, savepoint analytics) was strong, but staying focused on core workflows made V1 achievable and usable.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="project-section">
+        <div class="container-small">
+            <a href="../index.html#work" class="back-link">← Back to all projects</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Abhilash Bhattacharjee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/project-protection.js"></script>
+    <script src="../js/script.js"></script>
+</body>
+</html>
