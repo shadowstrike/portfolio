@@ -60,10 +60,76 @@
         </div>
     </section>
 
+    <!-- Table of Contents -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Table of Contents</h2>
+            <nav style="margin-top: 2rem;">
+                <ul style="margin: 0; padding-left: 0; list-style: none; border-left: 2px solid var(--color-accent); padding-left: 1.5rem;">
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#overview" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">01.</span> Overview
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#context" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">02.</span> Context & Challenge
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#current-state" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">03.</span> Current State
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#competitive" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">04.</span> Competitive Landscape
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#strategy" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">05.</span> Design Strategy
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#journeys" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">06.</span> Persona Journeys
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#solution" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">07.</span> Solution
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#delivery" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">08.</span> Delivery & Outcomes
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#impact" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">09.</span> Impact & Results
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#learnings" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">10.</span> Key Learnings
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#future" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">11.</span> Future Work
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
     <!-- Overview -->
     <section class="project-section">
         <div class="container-small">
-            <h2>Overview</h2>
+            <h2 id="overview">Overview</h2>
             <p>With CP Flink 2.0, Confluent introduced FlinkSQL support—but execution required CLI expertise, blocking adoption for 1,000+ SQL developers migrating from ksqlDB. As lead designer, I <strong>architected</strong> a comprehensive SQL development workspace within Control Center that <strong>serves</strong> both Omar the Operator (managing catalogs, secrets, compute pools) and Dell the Developer (submitting queries, streaming results in browser).</p>
 
             <p>The design <strong>achieved</strong> functional equivalence to Flink CLI (excluding interactive shell) while <strong>matching</strong> Ververica Platform's catalog browser integration and Confluent Cloud's real-time result streaming, <strong>reducing</strong> onboarding time for SQL developers from 2 weeks to 1 day with zero CLI training required.</p>
@@ -78,7 +144,7 @@
     <!-- Context & Challenge -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>Context & Challenge</h2>
+            <h2 id="context">Context & Challenge</h2>
 
             <h3>Business Context</h3>
             <p>Confluent Cloud offers SQL interactive development environments. Ververica Platform provides first-class SQL support. Cloudera has mature SQL tooling. CP Flink 2.0 introduced FlinkSQL, but without UI, customers faced steep learning curves migrating from ksqlDB or adopting Flink for the first time.</p>
@@ -127,7 +193,7 @@
     <!-- Current State & Pain Points -->
     <section class="project-section">
         <div class="container-small">
-            <h2>Current State: Before FlinkSQL UI</h2>
+            <h2 id="current-state">Current State: Before FlinkSQL UI</h2>
 
             <p>Before this project, both personas faced significant barriers to productivity. Understanding their pain points was critical to designing an effective solution.</p>
 
@@ -173,7 +239,7 @@
     <!-- Competitive Landscape -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>Competitive Landscape Analysis</h2>
+            <h2 id="competitive">Competitive Landscape Analysis</h2>
 
             <p>Before designing the solution, I conducted comprehensive competitive analysis across 4 major platforms to understand industry standards, identify UX gaps, and determine what CP Flink needed to match or exceed.</p>
 
@@ -314,7 +380,7 @@
     <!-- Design Strategy & Approach -->
     <section class="project-section">
         <div class="container-small">
-            <h2>Design Strategy & 3-Month Delivery Plan</h2>
+            <h2 id="strategy">Design Strategy & 3-Month Delivery Plan</h2>
 
             <p>With clear understanding of user pain points and competitive gaps, I developed a phased design strategy that prioritized operator infrastructure setup (Month 1), developer SQL execution (Month 2), and refinement for production readiness (Month 3).</p>
 
@@ -397,7 +463,7 @@
     <!-- Persona Journeys Transformed -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>Persona Journeys: Before vs. After</h2>
+            <h2 id="journeys">Persona Journeys: Before vs. After</h2>
 
             <p>The FlinkSQL UI fundamentally transforms how Omar and Dell accomplish their work. Here's how their journeys improved.</p>
 
@@ -452,7 +518,7 @@
     <!-- Solution Implementation -->
     <section class="project-section">
         <div class="container-small">
-            <h2>Solution: What We Built</h2>
+            <h2 id="solution">Solution: What We Built</h2>
 
             <p>The final implementation spans five interconnected sections within Control Center, each designed to serve specific persona needs while maintaining cohesive UX.</p>
 
@@ -727,7 +793,7 @@
     <!-- Delivery & Outcomes -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>Delivery & Outcomes</h2>
+            <h2 id="delivery">Delivery & Outcomes</h2>
 
             <h3>3-Month Execution Timeline</h3>
             <div class="impact-grid">
@@ -779,7 +845,7 @@
     <!-- Impact -->
     <section class="project-section">
         <div class="container-small">
-            <h2>Impact & Results</h2>
+            <h2 id="impact">Impact & Results</h2>
 
             <div class="impact-grid">
                 <div class="impact-card">
@@ -824,7 +890,7 @@
     <!-- Learnings -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>Key Learnings & Challenges</h2>
+            <h2 id="learnings">Key Learnings & Challenges</h2>
 
             <h3>Balancing Two Personas</h3>
             <p>Omar and Dell have overlapping but distinct needs. Omar cares about resource management, Dell cares about query execution. The challenge was creating clear information scent - when Dell opens SQL Statements, he shouldn't be overwhelmed by compute pool configurations.</p>
@@ -849,7 +915,7 @@
     <!-- Future Work -->
     <section class="project-section">
         <div class="container-small">
-            <h2>Future Work</h2>
+            <h2 id="future">Future Work</h2>
 
             <ul>
                 <li><strong>Materialized Tables:</strong> Introduce as first-class resource, potentially making Statements less prominent</li>
@@ -876,5 +942,20 @@
 
     <script src="../js/project-protection.js"></script>
     <script src="../js/script.js"></script>
+    <script>
+        // Smooth scroll for table of contents links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

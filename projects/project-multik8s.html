@@ -60,10 +60,51 @@
         </div>
     </section>
 
+    <!-- Table of Contents -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Table of Contents</h2>
+            <nav style="margin-top: 2rem;">
+                <ul style="margin: 0; padding-left: 0; list-style: none; border-left: 2px solid var(--color-accent); padding-left: 1.5rem;">
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#overview" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">01.</span> Overview
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#context" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">02.</span> Context & Problem
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#contribution" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">03.</span> My Design Review Contribution
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#solution" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">04.</span> Solution Implementation
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#impact" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">05.</span> Impact & Outcome
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#learnings" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">06.</span> Key Learnings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
     <!-- Overview -->
     <section class="project-section">
         <div class="container-small">
-            <h2>Overview</h2>
+            <h2 id="overview">Overview</h2>
             <p>As enterprises adopt multi-cloud strategies, they need to run Flink workloads across Kubernetes clusters in different cloud providers (AWS, Azure, GCP) or regions. Previously, CP Flink required one CMF installation per K8s cluster—creating operational burden for enterprises managing 10+ clusters and blocking adoption for multi-cloud customers.</p>
 
             <p>As binding design reviewer, I <strong>validated</strong> hub-and-spoke architecture where a single "master CMF" <strong>manages</strong> Flink applications across 10+ K8s clusters via lightweight Flink Kubernetes Operator (FKO) spokes, <strong>reducing</strong> operational overhead by 70% (from managing N CMF instances to managing 1) and <strong>enabling</strong> unified multi-cloud deployment for 25+ enterprise customers.</p>
@@ -100,7 +141,7 @@
     <!-- Context -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>Context & Problem</h2>
+            <h2 id="context">Context & Problem</h2>
 
             <div class="highlight-box">
                 <div class="persona-card">
@@ -132,7 +173,7 @@
     <!-- My Contribution -->
     <section class="project-section">
         <div class="container-small">
-            <h2>My Design Review Contribution</h2>
+            <h2 id="contribution">My Design Review Contribution</h2>
 
             <h3>Architecture Validation</h3>
             <p>Reviewed the proposed hub-and-spoke model where:</p>
@@ -275,7 +316,7 @@
     <!-- Solution Implementation -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>Solution Implementation</h2>
+            <h2 id="solution">Solution Implementation</h2>
 
             <h3>Application Management Across Clusters</h3>
             <p>Users can create and manage Flink applications on any connected Kubernetes cluster through the unified interface:</p>
@@ -436,7 +477,7 @@
     <!-- Impact -->
     <section class="project-section">
         <div class="container-small">
-            <h2>Impact & Outcome</h2>
+            <h2 id="impact">Impact & Outcome</h2>
 
             <div class="impact-grid">
                 <div class="impact-card">
@@ -465,7 +506,7 @@
     <!-- Learnings -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>Key Learnings</h2>
+            <h2 id="learnings">Key Learnings</h2>
 
             <h3>Systems Thinking in Design Review</h3>
             <p>Reviewing architecture proposals requires thinking beyond UI screens to understand data flows, failure modes, and operational implications. The decommissioning edge case only became apparent when mapping out all state transitions.</p>
@@ -496,5 +537,20 @@
 
     <script src="../js/project-protection.js"></script>
     <script src="../js/script.js"></script>
+    <script>
+        // Smooth scroll for table of contents links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citrix SD-WAN Report Management - Abhilash Bhattacharjee</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">Abhilash Bhattacharjee</a>
+            <div style="display: flex; align-items: center;">
+                <div class="nav-links">
+                    <a href="../index.html#work">Work</a>
+                    <a href="../index.html#about">About</a>
+                    <a href="../index.html#contact">Contact</a>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon theme-icon-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg class="theme-icon theme-icon-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <p class="breadcrumb">
+                <a href="../index.html">Home</a> / <a href="../index.html#work">Work</a> / SD-WAN Report Management
+            </p>
+
+            <h1>Report Management in Citrix SD-WAN Orchestrator Portal</h1>
+            <p class="hero-subtitle"><strong>Redesigned</strong> report structure and information architecture for Citrix SD-WAN Orchestrator, <strong>improving</strong> report discovery by 30% and <strong>reducing</strong> loading time by 75% (2min → 30sec) while <strong>achieving</strong> 100% customer satisfaction for 1,000+ enterprise network administrators.</p>
+
+            <div class="project-meta-info">
+                <div class="meta-item">
+                    <span class="meta-label">Role</span>
+                    <span class="meta-value">Product Designer</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Timeline</span>
+                    <span class="meta-value">2020</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-value">Launched</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Team</span>
+                    <span class="meta-value">Cross-functional (PM, Eng, Design)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Table of Contents</h2>
+            <nav style="margin-top: 2rem;">
+                <ul style="margin: 0; padding-left: 0; list-style: none; border-left: 2px solid var(--color-accent); padding-left: 1.5rem;">
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#overview" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">01.</span> Project Overview
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#problem" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">02.</span> The Problem
+                        </a>
+                        <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem; list-style: none; border-left: 2px solid rgba(91, 159, 255, 0.3);">
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#old-design" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Old Report Design Problems
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#audience" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">03.</span> Target Audience
+                        </a>
+                        <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem; list-style: none; border-left: 2px solid rgba(91, 159, 255, 0.3);">
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#personas" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    User Research & Personas
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#process" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">04.</span> Design Process
+                        </a>
+                        <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem; list-style: none; border-left: 2px solid rgba(91, 159, 255, 0.3);">
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#research" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Step 1: Research
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#problem-definition" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Step 2: Problem Definition
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#problem-exploration" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Step 3: Problem Exploration
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#whiteboarding" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Whiteboarding & Ideation
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#solution-design" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Step 4: Solution Design
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#design-delivery" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Step 5: Design Delivery
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#solution" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">05.</span> Final Design Solution
+                        </a>
+                        <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem; list-style: none; border-left: 2px solid rgba(91, 159, 255, 0.3);">
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#report-structure" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    New Reusable Report Structure
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#report-types" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Additional Report Types
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#enhanced-features" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Enhanced Report Features
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#impact" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">06.</span> Impact & Results
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 0;">
+                        <a href="#learnings" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">07.</span> Key Learnings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section id="overview" class="project-section">
+        <div class="container-small">
+            <h2>Project Overview</h2>
+            <p>Citrix SD-WAN Orchestrator is a cloud-hosted, multi-tenant management service that enables IT administrators and Citrix partners to manage multiple customers with a single pane of glass. The platform provides role-based access control and comprehensive monitoring capabilities for enterprises running SD-WAN infrastructure.</p>
+
+            <p>The reporting system was critical for customers to monitor network performance, troubleshoot issues, and make infrastructure decisions. However, the existing report experience had become a major pain point affecting customer satisfaction and operational efficiency.</p>
+
+            <div class="image-container">
+                <img src="../images/citrix/sdwan/current_journey.webp" alt="Current user journey showing pain points">
+                <p class="image-caption">Current state journey map highlighting customer frustrations</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Statement -->
+    <section id="problem" class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>The Problem</h2>
+
+            <p>Our Product Manager expressed serious concerns about the SD-WAN reporting experience. Customer feedback revealed multiple critical issues:</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Inconsistent Report Structures</h4>
+                    <p>With tons of features and workflows, multiple reports looked drastically different from one another. No consistent format or navigation patterns across 50+ different reports.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Poor Historical Tracking</h4>
+                    <p>Historic views of individual reports were not maintained systematically. Administrators couldn't segregate reports against specific sites, regions, or customers—a critical requirement.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Complex Navigation</h4>
+                    <p>Due to complex structure layouts, administrators lost track of which page they were on, leading to delayed or incorrect decisions during problem mitigation.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Severe Performance Issues</h4>
+                    <p>HDX report's first-level page took 2 minutes to load. This extreme delay prevented administrators from making quick decisions during critical incidents.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Customer Impact</h4>
+                <p><strong>The portal was very sophisticated</strong> as a lot of monitoring and troubleshooting work gets executed and reviewed by customer administrators. When reports failed to provide quick, clear answers, administrators couldn't respond effectively to network issues—directly impacting business operations.</p>
+            </div>
+
+            <h3 id="old-design">Old Report Design Problems</h3>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/old-design-report-1.webp" alt="Old report design showing inconsistent structure">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/old-design-report-2.webp" alt="Old report with complex structure">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/old-design-report-3.webp" alt="Old report with no data visualization">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/old-design-report-4.webp" alt="Old report with poor information hierarchy">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Old designs showing inconsistent table formats, complex structures, and lack of data visualization</p>
+        </div>
+    </section>
+
+    <!-- Users & Audience -->
+    <section id="audience" class="project-section">
+        <div class="container-small">
+            <h2>Target Audience</h2>
+
+            <p>The SD-WAN Orchestrator serves two primary customer segments:</p>
+
+            <h3>1. Managed Service Providers and Tenants</h3>
+            <p>Customers who consume managed SD-WAN services from Citrix partners, enabled by the multi-tenant SD-WAN Orchestrator service architecture.</p>
+
+            <h3>2. "Do It Yourself" (DIY) Enterprises</h3>
+            <p>Large enterprises using Citrix SD-WAN Orchestrator as a self-managed service for their own infrastructure. These teams manage SD-WAN deployments across multiple sites, regions, and clouds.</p>
+
+            <div class="highlight-box">
+                <h4>User Needs</h4>
+                <ul>
+                    <li><strong>Network Administrators:</strong> Need quick access to real-time monitoring data and historical trends to identify performance issues</li>
+                    <li><strong>Operations Teams:</strong> Require clear report formats to troubleshoot incidents and make infrastructure decisions under time pressure</li>
+                    <li><strong>Engineering Leaders:</strong> Need comprehensive visibility across all managed customers and sites from a single interface</li>
+                </ul>
+            </div>
+
+            <h3 id="personas">User Research & Personas</h3>
+            <p>Through interviews and surveys, we identified three primary personas who interact with SD-WAN reports daily:</p>
+
+            <div class="highlight-box">
+                <h4>Network Administrator - Primary User</h4>
+                <p><strong>Goals:</strong></p>
+                <ul>
+                    <li>Monitor network performance across multiple sites in real-time</li>
+                    <li>Quickly identify and troubleshoot connectivity issues</li>
+                    <li>Generate reports for capacity planning and optimization</li>
+                </ul>
+                <p><strong>Pain Points:</strong></p>
+                <ul>
+                    <li>Reports take 2+ minutes to load during critical incidents</li>
+                    <li>Inconsistent report formats cause confusion</li>
+                    <li>Cannot filter reports by specific sites or regions</li>
+                    <li>No historical data comparison</li>
+                </ul>
+                <p><strong>Key Quote:</strong> <em>"When there's a network outage, every second counts. Waiting 2 minutes for a report to load is unacceptable."</em></p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Operations Manager - Secondary User</h4>
+                <p><strong>Goals:</strong></p>
+                <ul>
+                    <li>Oversee multiple customer deployments from single dashboard</li>
+                    <li>Review SLA compliance and performance metrics</li>
+                    <li>Schedule automated reports for stakeholders</li>
+                </ul>
+                <p><strong>Pain Points:</strong></p>
+                <ul>
+                    <li>Cannot schedule or automate report delivery</li>
+                    <li>No way to export reports in shareable formats</li>
+                    <li>Difficult to compare performance across customers</li>
+                    <li>Lacks visual data representation (charts/graphs)</li>
+                </ul>
+                <p><strong>Key Quote:</strong> <em>"I need to share weekly performance summaries with executives, but there's no easy way to export or schedule reports."</em></p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Service Provider Engineer - Power User</h4>
+                <p><strong>Goals:</strong></p>
+                <ul>
+                    <li>Deep-dive into specific session or site performance</li>
+                    <li>Diagnose complex multi-tenant issues</li>
+                    <li>Access granular metrics for root cause analysis</li>
+                </ul>
+                <p><strong>Pain Points:</strong></p>
+                <ul>
+                    <li>Cannot drill down from overview to detailed metrics</li>
+                    <li>Navigation structure is confusing and non-intuitive</li>
+                    <li>Report layout inconsistency makes troubleshooting harder</li>
+                    <li>Missing breadcrumbs or navigation context</li>
+                </ul>
+                <p><strong>Key Quote:</strong> <em>"I need to go from high-level overview to specific session details quickly. The current navigation makes me lose track of where I am."</em></p>
+            </div>
+
+            <h4 style="margin-top: 2rem;">Research Insights Summary</h4>
+            <div class="image-container">
+                <img src="../images/citrix/sdwan/customer_interactions, insights,usecases and user flows.webp" alt="Customer interactions and use cases">
+                <p class="image-caption">Synthesized research findings: Customer interactions, insights, use cases, and user flows</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Process -->
+    <section id="process" class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Design Process</h2>
+
+            <h3 id="research">Step 1: Research</h3>
+            <p>Working closely with the Product Management Team, I gathered insights through multiple research methods:</p>
+
+            <ul>
+                <li><strong>User Interviews:</strong> Spoke with customers who used the product daily to understand pain points</li>
+                <li><strong>Questionnaires:</strong> Collected quantitative data on feature usage and satisfaction</li>
+                <li><strong>Surveys:</strong> Identified the most important and essential behaviors for users who would help define the problem better</li>
+                <li><strong>Market Study:</strong> Analyzed competitor solutions and industry best practices</li>
+            </ul>
+
+            <p>I shared existing report formats with peers (Designers, PfriEnds, frnds) to check what they liked or disliked about the products.</p>
+
+            <div class="highlight-box">
+                <h4>Key Research Insights</h4>
+                <p>Based on PM inputs, we collected insights and validated few important and essential behaviors from our users who would help us in defining the problem in a better manner. Interviews provided an in-depth understanding of user behaviors and their daily activities.</p>
+            </div>
+
+            <div class="image-container">
+                <img src="../images/citrix/sdwan/plan_of_action.webp" alt="5-step design execution plan">
+                <p class="image-caption">Design execution plan: 5-step approach from research to delivery</p>
+            </div>
+
+            <h3 id="problem-definition">Step 2: Problem Definition</h3>
+            <p>Once the PM shared observations, I reached out and interviewed customers who used the product on a daily basis. This helped me understand user needs and establish a clear problem definition:</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Maintain a Reusable Skeleton Report Structure</h4>
+                    <p>Build a foundation that can be applied across any reporting page to achieve consistency and reduce cognitive load.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Three Progressive Disclosure Levels</h4>
+                    <p>First level view (eagle's eye view), second level (consolidated data view), and third level (drill-down deeper with detailed data visualization).</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Suitable Data Visualization</h4>
+                    <p>Add data visualization against reports to help users take critical decisions and make needful adjustments within the infrastructure.</p>
+                </div>
+            </div>
+
+            <h3 id="problem-exploration">Step 3: Problem Exploration</h3>
+            <p>With insights from customers, I shared these with the Product Managers and Engineering team and highlighted the key areas which need immediate improvements and where we could enhance/add new features/functionalities within the existing reports.</p>
+
+            <div class="highlight-box">
+                <h4>Foundation for Future Scalability</h4>
+                <p>I developed a <strong>reusable skeleton report structure</strong> which could be applied across any reporting page. This provided a lot of relief to our customers. Once the base foundation gets addressed, multiple chain of features could be designed accordingly which will provide relief to our customers.</p>
+            </div>
+
+            <h3 id="whiteboarding">Whiteboarding & Ideation</h3>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/whiteboarding-of-new-report-structure-modal.webp" alt="Whiteboard sketches of new report structure">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/HDX_report_navigation_structure.webp" alt="Original HDX report navigation structure">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/new_scalable_ report_navigation_structure.webp" alt="New scalable report navigation structure">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Whiteboarding session, original complex structure, and new scalable navigation with progressive disclosure</p>
+
+            <h3 id="solution-design">Step 4: Solution Design</h3>
+            <p>The brainstormed multiple directions to fix the problem and finalized a plan that addressed all critical issues:</p>
+
+            <ul>
+                <li><strong>Generic Report Structure Format:</strong> Build a consistent skeleton that works across all report types</li>
+                <li><strong>Download Reports Locally:</strong> Enable local export and group sending capabilities</li>
+                <li><strong>Scheduled Automated Reports:</strong> Send reports to fixed number of users based on defined patterns</li>
+                <li><strong>Universal Search:</strong> Maintain search across all reports for quick data/feature access</li>
+                <li><strong>Improved Table Formats:</strong> Present primary and secondary buttons in a different manner across all reports</li>
+                <li><strong>Data Visualization:</strong> Add charts and graphs within report pages</li>
+                <li><strong>Proper Titling:</strong> Use clear and direct titles for better comprehension</li>
+                <li><strong>Exhaustive Record Details:</strong> Provide complete information at each level</li>
+            </ul>
+
+            <h3 id="design-delivery">Step 5: Design Delivery</h3>
+            <p>Before handing over designs, I shared them with customers and sought feedback. Both visible and invisible changes were tested with A/B testing.</p>
+
+            <p>Based on inputs received, I shared all design deliverables to the engineering team and they implemented them accordingly. The engineering team was able to migrate 50+ reports in a span of 1.5 months.</p>
+
+            <div class="highlight-box">
+                <h4>Testing & Validation</h4>
+                <p>Our HDX report A/B test showed <strong>loading time of the first level page was reduced from 2min to 30sec</strong>. Users were able to make a quick decision to diagnose problems within 1-2min (earlier it was more than 5-10min).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Design Solution -->
+    <section id="solution" class="project-section">
+        <div class="container-small">
+            <h2>Final Design Solution</h2>
+
+            <h3 id="report-structure">New Reusable Report Structure</h3>
+            <p>The redesigned report structure features three progressive disclosure levels, consistent navigation, and integrated data visualization.</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/new-report-structure-modal.webp" alt="New generic report structure">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/HDX-report-dashboard.webp" alt="HDX Report dashboard view">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/HDX-report-across-all-sessions.webp" alt="HDX Report across all sessions">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/HDX-report-across-all-sites.webp" alt="HDX Report across all sites">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/HDX-report-across-all-users.webp" alt="HDX Report across all users">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/HDX-report-drilldown-specific-session.webp" alt="HDX Report drilldown - specific session">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/HDX-report-drilldown-specific-site.webp" alt="HDX Report drilldown - specific site">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/HDX-report-drilldown-specific-user.webp" alt="HDX Report drilldown - specific user">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">HDX Report progressive disclosure: Generic structure → Dashboard (Level 1) → Consolidated views (Level 2) → Detailed drill-downs (Level 3)</p>
+
+            <h3 id="report-types">Additional Report Types</h3>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/new-QoS(quality of service)-report.webp" alt="QoS report with data visualization">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/new-QoS(quality of service)-report-summary-view.webp" alt="QoS report summary view">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/new-QoS(quality of service)-report-summary-view-horizontal-bar-chart.webp" alt="QoS report with horizontal bar charts">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/new-alert-report.webp" alt="Alert report with status indicators">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/new-report-for-application-usage.webp" alt="Application usage report">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Additional report types: QoS with data visualization, alert reporting, and application usage tracking</p>
+
+            <h3 id="enhanced-features">Enhanced Report Features</h3>
+            <p>New functionality to improve workflow efficiency and collaboration:</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/export-report-dropdown.webp" alt="Export report dropdown menu">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/export-report-view.webp" alt="Export report view">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/slide-panel-to-export-report-locally.webp" alt="Slide panel to export report locally">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/slide-panel-to-send-report.webp" alt="Slide panel to send report">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/slide-panel-to-schedule-report-sending.webp" alt="Slide panel to schedule report sending">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/citrix/sdwan/scheduled-export-report-list.webp" alt="Scheduled export report list">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Enhanced workflow features: Export dropdowns, local exports, send to users/groups, and automated scheduled delivery</p>
+        </div>
+    </section>
+
+    <!-- Impact & Results -->
+    <section id="impact" class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2>Impact & Results</h2>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h3 style="color: var(--color-accent); font-size: 2.5rem; margin-bottom: 0.5rem;">30%</h3>
+                    <h4>Improved Report Discovery</h4>
+                    <p>Users could find and access the right reports significantly faster with consistent navigation patterns.</p>
+                </div>
+                <div class="impact-card">
+                    <h3 style="color: var(--color-accent); font-size: 2.5rem; margin-bottom: 0.5rem;">75%</h3>
+                    <h4>Reduced Loading Time</h4>
+                    <p>Report loading time dropped from 2 minutes to 30 seconds (1.5M improvement), enabling real-time decision making.</p>
+                </div>
+                <div class="impact-card">
+                    <h3 style="color: var(--color-accent); font-size: 2.5rem; margin-bottom: 0.5rem;">2%</h3>
+                    <h4>Reduced User Frustration</h4>
+                    <p>Streamlined workflows and consistent patterns reduced cognitive load and navigation confusion.</p>
+                </div>
+                <div class="impact-card">
+                    <h3 style="color: var(--color-accent); font-size: 2.5rem; margin-bottom: 0.5rem;">100%</h3>
+                    <h4>Customer Satisfaction Rate</h4>
+                    <p>Improved from 75% to 100% satisfaction among surveyed customers after the redesign.</p>
+                </div>
+            </div>
+
+            <h3>Scalability & Adoption</h3>
+            <ul>
+                <li><strong>Converted 10+ reports immediately</strong> with the new generic structure (out of 50+ total reports)</li>
+                <li><strong>40% of reports</strong> had intermediate and drill-down pages successfully implemented</li>
+                <li><strong>Engineering team migrated 50+ reports</strong> in just 1.5 months using the reusable skeleton</li>
+                <li><strong>Diagnostic time reduced from 5-10min to 1-2min</strong> for critical network incidents</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>Business Impact</h4>
+                <p>The redesigned report structure not only solved immediate customer pain points but created a <strong>scalable foundation</strong> that enabled rapid addition of new reporting features. The consistent format reduced development time for new reports while maintaining high quality user experience across the entire platform.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Learnings -->
+    <section id="learnings" class="project-section">
+        <div class="container-small">
+            <h2>Key Learnings</h2>
+
+            <h3>1. Systematic Research Drives Better Solutions</h3>
+            <p>Combining multiple research methods (interviews, questionnaires, surveys, market study) provided a comprehensive understanding of the problem space. User interviews were particularly valuable in uncovering hidden pain points that surveys alone would have missed.</p>
+
+            <h3>2. Consistency is Critical for Complex Systems</h3>
+            <p>In sophisticated enterprise tools with 50+ different reports, establishing a reusable skeleton structure was transformational. Consistency reduced cognitive load and made the entire platform more approachable.</p>
+
+            <h3>3. Progressive Disclosure Manages Complexity</h3>
+            <p>The three-level information hierarchy (eagle's eye view → consolidated data → detailed drill-down) allowed users to access exactly the level of detail they needed without overwhelming them upfront.</p>
+
+            <h3>4. Performance is a Feature</h3>
+            <p>Reducing load time from 2 minutes to 30 seconds wasn't just a technical improvement—it fundamentally changed how administrators could use the tool during critical incidents. Speed directly impacted business outcomes.</p>
+
+            <h3>5. Scalable Design Systems Pay Long-term Dividends</h3>
+            <p>By creating a generic, reusable report structure, we enabled the engineering team to migrate 50+ reports in 1.5 months—work that would have taken far longer with custom designs for each report.</p>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="project-section">
+        <div class="container-small">
+            <a href="../index.html#work" class="back-link">← Back to all projects</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Abhilash Bhattacharjee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        // Smooth scroll for table of contents links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

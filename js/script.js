@@ -112,18 +112,33 @@ const createBackToTop = () => {
 
 class Carousel {
     constructor(element) {
+        // Prevent double initialization
+        if (element._carouselInitialized) {
+            console.warn('Carousel already initialized, skipping...');
+            return element._carouselInstance;
+        }
+
         this.carousel = element;
+        this.carouselId = element.getAttribute('data-carousel-id') || 'unknown';
+        this.container = element.querySelector('.carousel-container');
         this.track = element.querySelector('.carousel-track');
-        this.slides = Array.from(this.track.children);
-        this.prevButton = element.querySelector('.carousel-button-prev');
-        this.nextButton = element.querySelector('.carousel-button-next');
-        this.indicators = element.querySelector('.carousel-indicators');
-        this.counter = element.querySelector('.carousel-counter');
+        this.slides = Array.from(this.track.querySelectorAll('.carousel-slide'));
+        this.prevButton = this.container.querySelector('.carousel-button-prev');
+        this.nextButton = this.container.querySelector('.carousel-button-next');
+        this.indicators = this.container.querySelector('.carousel-indicators');
+        this.counter = this.container.querySelector('.carousel-counter');
         this.fullscreenButton = null;
         this.isFullscreen = false;
 
         this.currentIndex = 0;
         this.slideCount = this.slides.length;
+
+        console.log(`[Carousel ${this.carouselId}] Initialized with ${this.slideCount} slides`);
+        console.log(`[Carousel ${this.carouselId}] Next button:`, this.nextButton);
+        console.log(`[Carousel ${this.carouselId}] Prev button:`, this.prevButton);
+
+        element._carouselInitialized = true;
+        element._carouselInstance = this;
 
         this.init();
     }
@@ -137,13 +152,27 @@ class Carousel {
         // Create fullscreen button
         this.createFullscreenButton();
 
-        // Add event listeners
+        // Add event listeners (use once option to prevent duplicates)
         if (this.prevButton) {
-            this.prevButton.addEventListener('click', () => this.goToPrevious());
+            // Remove any existing listeners first
+            const prevHandler = (e) => {
+                e.stopPropagation();
+                this.goToPrevious();
+            };
+            this.prevButton._carouselPrevHandler = prevHandler;
+            this.prevButton.addEventListener('click', prevHandler);
         }
 
         if (this.nextButton) {
-            this.nextButton.addEventListener('click', () => this.goToNext());
+            // Remove any existing listeners first
+            const nextHandler = (e) => {
+                e.stopPropagation();
+                console.log(`[Carousel ${this.carouselId}] Next handler called from button:`, e.currentTarget);
+                this.goToNext();
+            };
+            this.nextButton._carouselNextHandler = nextHandler;
+            this.nextButton.addEventListener('click', nextHandler);
+            console.log(`[Carousel ${this.carouselId}] Added next listener to button:`, this.nextButton);
         }
 
         // Keyboard navigation
@@ -175,7 +204,10 @@ class Carousel {
             const indicator = document.createElement('button');
             indicator.className = 'carousel-indicator';
             indicator.setAttribute('aria-label', `Go to slide ${index + 1}`);
-            indicator.addEventListener('click', () => this.goToSlide(index));
+            indicator.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.goToSlide(index);
+            });
             this.indicators.appendChild(indicator);
         });
 
@@ -256,6 +288,7 @@ class Carousel {
     goToNext() {
         if (this.currentIndex < this.slideCount - 1) {
             this.currentIndex++;
+            console.log(`[Carousel ${this.carouselId}] Next clicked - Index: ${this.currentIndex}, Total slides: ${this.slideCount}`);
             this.updateCarousel();
         }
     }
@@ -263,6 +296,7 @@ class Carousel {
     goToPrevious() {
         if (this.currentIndex > 0) {
             this.currentIndex--;
+            console.log(`[Carousel ${this.carouselId}] Previous clicked - Index: ${this.currentIndex}, Total slides: ${this.slideCount}`);
             this.updateCarousel();
         }
     }
@@ -270,6 +304,7 @@ class Carousel {
     updateCarousel() {
         // Move track
         const offset = -this.currentIndex * 100;
+        console.log(`[Carousel ${this.carouselId}] Updating - Offset: ${offset}%, Current slide: ${this.currentIndex + 1}`);
         this.track.style.transform = `translateX(${offset}%)`;
 
         // Update buttons
@@ -381,7 +416,10 @@ class Carousel {
 // Initialize all carousels on page load
 document.addEventListener('DOMContentLoaded', () => {
     const carousels = document.querySelectorAll('.carousel');
-    carousels.forEach(carousel => new Carousel(carousel));
+    carousels.forEach((carousel, index) => {
+        carousel.setAttribute('data-carousel-id', index);
+        new Carousel(carousel);
+    });
 
     // Initialize image zoom modal
     initImageZoom();

@@ -115,10 +115,97 @@
         </div>
     </section>
 
+    <!-- Table of Contents -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Table of Contents</h2>
+            <nav style="margin-top: 2rem;">
+                <ul style="margin: 0; padding-left: 0; list-style: none; border-left: 2px solid var(--color-accent); padding-left: 1.5rem;">
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#overview" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">01.</span> Overview
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#context" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">02.</span> Context & Problem
+                        </a>
+                        <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem; list-style: none; border-left: 2px solid rgba(91, 159, 255, 0.3);">
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#pain-points" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Current Pain Points
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#sql-udf" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Future SQL UDF Support
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#solution" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">03.</span> Solution Design
+                        </a>
+                        <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem; list-style: none; border-left: 2px solid rgba(91, 159, 255, 0.3);">
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#resource-model" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Artifact Resource Model
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#storage" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Storage Architecture
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#integration" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    FlinkApplication Integration
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#contribution" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">04.</span> My Design Review Contribution
+                        </a>
+                        <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem; list-style: none; border-left: 2px solid rgba(91, 159, 255, 0.3);">
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#rbac" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    RBAC Pattern Validation
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#ui-ux" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    UI/UX Patterns
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#cli" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    CLI Command Structure
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#impact" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">05.</span> Expected Impact
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#learnings" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">06.</span> Key Learnings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
     <!-- Overview -->
     <section class="project-section">
         <div class="container-small">
-            <h2>Overview</h2>
+            <h2 id="overview">Overview</h2>
             <p>In CP Flink 2.2.0, customers must build custom Docker images containing their JARs or configure external storage (S3, volume mounts) to provide artifacts to Flink applications. This workflow required 2+ hours per deployment and blocked adoption for enterprises with strict CLI-prohibited security policies (e.g., Oracle Cloud).</p>
 
             <p>As secondary design reviewer, I <strong>validated</strong> artifact management capabilities that <strong>eliminated</strong> custom Docker builds, <strong>reducing</strong> deployment cycles by 87% (2 hours → 15 minutes) for 125+ customers while <strong>enabling</strong> UI-only workflows for organizations where CLI tools are prohibited (OCC use case, serving 50+ regulated enterprises).</p>
@@ -130,7 +217,7 @@
     <!-- Context -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>Context & Problem</h2>
+            <h2 id="context">Context & Problem</h2>
 
             <div class="highlight-box">
                 <h4>Dual Persona Solution</h4>
@@ -154,7 +241,7 @@
                 </div>
             </div>
 
-            <h3>Current Pain Points</h3>
+            <h3 id="pain-points">Current Pain Points</h3>
             <ul>
                 <li>Customers must build custom Docker images containing Confluent's Flink distribution + their JAR files</li>
                 <li>OR provide JARs via external storage (volume mounts, S3) with manual configuration</li>
@@ -168,7 +255,7 @@
 
             <img src="../images/confluent/artifacts/empty-state-not-configured.png" alt="Empty state showing artifact management not configured" style="width: 100%; border-radius: var(--radius-md); margin-top: 2rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);">
 
-            <h3>Future SQL UDF Support</h3>
+            <h3 id="sql-udf">Future SQL UDF Support</h3>
             <p>Additionally, future Flink SQL will require mechanism for users to provide JAR/Python files for custom UDFs and connectors. Artifact management provides this foundation.</p>
         </div>
     </section>
@@ -176,9 +263,9 @@
     <!-- Solution -->
     <section class="project-section">
         <div class="container-small">
-            <h2>Solution Design</h2>
+            <h2 id="solution">Solution Design</h2>
 
-            <h3>Artifact Resource Model</h3>
+            <h3 id="resource-model">Artifact Resource Model</h3>
             <p>Introduces new Artifact resource type:</p>
 
             <ul>
@@ -195,7 +282,7 @@
                 <p class="image-caption">Artifact list view displaying key metadata: name, kind (Uploaded/Discovered), size, and creation timestamp</p>
             </div>
 
-            <h3>Storage Architecture</h3>
+            <h3 id="storage">Storage Architecture</h3>
             <p>Artifacts stored in configured blob storage using pattern:</p>
             <code>{base-path}/environments/{environment-name}/{filename}</code>
 
@@ -206,7 +293,7 @@
 
             <img src="../images/confluent/artifacts/environment-details.png" alt="Environment configuration details showing blob storage setup for artifacts" style="width: 100%; border-radius: var(--radius-md); margin-top: 2rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);">
 
-            <h3>FlinkApplication Integration</h3>
+            <h3 id="integration">FlinkApplication Integration</h3>
             <p>Applications reference artifacts using new URI scheme:</p>
             <code>cmf://{environment}/{filename}</code>
 
@@ -225,9 +312,9 @@
     <!-- My Contribution -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>My Design Review Contribution</h2>
+            <h2 id="contribution">My Design Review Contribution</h2>
 
-            <h3>RBAC Pattern Validation</h3>
+            <h3 id="rbac">RBAC Pattern Validation</h3>
             <p>Reviewed proposed RBAC resource type FlinkArtifact with operations:</p>
 
             <ul>
@@ -247,7 +334,7 @@
                 <p>This enables shared artifact environments (platform team provides approved connectors) while preventing unauthorized access.</p>
             </div>
 
-            <h3>UI/UX Patterns</h3>
+            <h3 id="ui-ux">UI/UX Patterns</h3>
             <p>Reviewed proposed UI workflows:</p>
 
             <ul>
@@ -306,7 +393,7 @@
                 <p>Ensure UI clearly distinguishes "uploaded" vs "discovered" artifacts. Uploaded artifacts have labels/annotations user can modify. Discovered artifacts are read-only metadata (CMF finds them in storage but user didn't upload via API).</p>
             </div>
 
-            <h3>CLI Command Structure</h3>
+            <h3 id="cli">CLI Command Structure</h3>
             <p>Validated CLI design mirrors Confluent Cloud patterns:</p>
 
             <ul>
@@ -321,7 +408,7 @@
     <!-- Impact -->
     <section class="project-section">
         <div class="container-small">
-            <h2>Expected Impact</h2>
+            <h2 id="impact">Expected Impact</h2>
 
             <div class="impact-grid">
                 <div class="impact-card">
@@ -347,7 +434,7 @@
     <!-- Learnings -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>Key Learnings</h2>
+            <h2 id="learnings">Key Learnings</h2>
 
             <h3>Reusing Infrastructure</h3>
             <p>Leveraging existing blob storage configuration (already used for checkpoints/savepoints) avoided introducing new dependency. Good design often means finding creative reuse rather than adding new components.</p>
@@ -378,5 +465,20 @@
 
     <script src="../js/project-protection.js"></script>
     <script src="../js/script.js"></script>
+    <script>
+        // Smooth scroll for table of contents links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

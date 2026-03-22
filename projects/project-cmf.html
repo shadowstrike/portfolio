@@ -60,16 +60,82 @@
         </div>
     </section>
 
+    <!-- Table of Contents -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Table of Contents</h2>
+            <nav style="margin-top: 2rem;">
+                <ul style="margin: 0; padding-left: 0; list-style: none; border-left: 2px solid var(--color-accent); padding-left: 1.5rem;">
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#overview" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">01.</span> Program Overview
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#strategic" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">02.</span> Strategic Context
+                        </a>
+                        <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem; list-style: none; border-left: 2px solid rgba(91, 159, 255, 0.3);">
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#objectives" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Business Objectives
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#competitive" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Competitive Analysis
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#goals" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">03.</span> UI Design Goals
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#personas" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">04.</span> User Personas Served
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#contribution" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">05.</span> Design Work Across Program
+                        </a>
+                        <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem; list-style: none; border-left: 2px solid rgba(91, 159, 255, 0.3);">
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#foundation" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Foundation (2025)
+                                </a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#features" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">
+                                    Feature Development
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#impact" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">06.</span> Program Impact
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
     <!-- Overview -->
     <section class="project-section">
         <div class="container-small">
-            <h2>Program Overview</h2>
+            <h2 id="overview">Program Overview</h2>
             <p>Confluent Manager for Apache Flink (CMF) handles Flink cluster deployment, job lifecycle management, RBAC integration, and licensing for Confluent Platform Flink. Initially, CMF only offered CLI and REST API interfaces - limiting accessibility for operators and developers who prefer graphical interfaces.</p>
 
             <p>The CMF Web UI program introduced a standalone user interface integrated into Confluent Control Center, positioning CP Flink as a viable alternative to Confluent Cloud's fully managed Flink service while competing with open-source alternatives like Ververica Platform and Cloudera.</p>
 
-            <div class="image-placeholder">
-                [Screenshot: C3 Flink Section Overview]
+            <div class="image-container">
+                <img src="../images/confluent/cmf/Design Handoff Screen/Environment details.png" alt="CMF Web UI - Environment and Applications Overview">
+                <p class="image-caption">CMF Web UI in Control Center showing Flink environments and applications with state management</p>
             </div>
         </div>
     </section>
@@ -77,9 +143,9 @@
     <!-- Strategic Context -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>Strategic Context</h2>
+            <h2 id="strategic">Strategic Context</h2>
 
-            <h3>Business Objectives</h3>
+            <h3 id="objectives">Business Objectives</h3>
             <div class="impact-grid">
                 <div class="impact-card">
                     <h4>Address Usability Challenges</h4>
@@ -95,7 +161,7 @@
                 </div>
             </div>
 
-            <h3>Competitive Analysis</h3>
+            <h3 id="competitive">Competitive Analysis</h3>
             <p>CMF without UI executes Flink jobs in Application Mode via Flink K8s operator but limits management to REST API and CLI. This hides CMF behind poor UX compared to competitors:</p>
 
             <ul>
@@ -114,7 +180,7 @@
     <!-- Design Goals -->
     <section class="project-section">
         <div class="container-small">
-            <h2>UI Design Goals</h2>
+            <h2 id="goals">UI Design Goals</h2>
 
             <h3>Goal 1: Separate Development and Operations</h3>
             <p>Lower barrier for operations. Allow organizations to separate roles of developer and application administrators for Apache Flink. Make CMF and Apache Flink deployments more accessible to non-Flink specialists.</p>
@@ -139,7 +205,7 @@
     <!-- User Personas -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>User Personas Served</h2>
+            <h2 id="personas">User Personas Served</h2>
 
             <div class="highlight-box">
                 <div class="persona-card">
@@ -170,8 +236,9 @@
                 <li><strong>Flow 3:</strong> Fine-tune environment defaults and application configurations for real-world deployment, troubleshooting, and sizing</li>
             </ul>
 
-            <div class="image-placeholder">
-                [Flow Diagram: Omar's User Journey]
+            <div class="image-container">
+                <img src="../images/confluent/cmf/Untitled_Artwork (1).png" alt="User flow diagram for Omar's journey through CMF Web UI">
+                <p class="image-caption">Early whiteboarding session mapping Omar's journey through environment creation, application management, and configuration</p>
             </div>
         </div>
     </section>
@@ -179,18 +246,181 @@
     <!-- My Contribution -->
     <section class="project-section">
         <div class="container-small">
-            <h2>Design Work Across Program</h2>
+            <h2 id="contribution">Design Work Across Program</h2>
 
             <p>As the lead designer for CP Flink's Control Center integration, my work spanned multiple releases and features within this broader CMF Web UI program:</p>
 
-            <h3>Foundation (2025)</h3>
+            <h3>Early Design Exploration & Storyboarding</h3>
+            <p>Initial exploration began with hand-drawn storyboards mapping out user journeys, interaction flows, and critical moments in the CMF Web UI experience. These sketches helped align stakeholders on key scenarios and identify edge cases early:</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Storyboarding/Untitled_Artwork (1).png" alt="User flow storyboard for Omar the Operator's journey">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Storyboarding/Untitled_Artwork (4) 1.png" alt="Onboarding flow showing CRF start, login, and environment list creation">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Storyboarding/Untitled_Artwork (3) 1.png" alt="Scenario 2 - Environment management and application viewing flows">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Storyboarding/Untitled_Artwork 4.png" alt="Scenario 3 - Application lifecycle management flows">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 1rem;">Hand-drawn storyboards exploring onboarding, environment creation, application management, and operator workflows</p>
+
+            <div class="highlight-box" style="margin-top: 2rem;">
+                <h4>Why Storyboarding First?</h4>
+                <p>Before jumping into high-fidelity mockups, I created these rough sketches to:</p>
+                <ul>
+                    <li>Map end-to-end user journeys across multiple screens and states</li>
+                    <li>Identify dependencies between environments, applications, and licensing</li>
+                    <li>Surface questions about error states, loading patterns, and progressive disclosure</li>
+                    <li>Get early feedback from engineering on technical feasibility</li>
+                </ul>
+                <p style="margin-top: 1rem;">This low-fidelity exploration saved weeks of iteration by validating core flows before investing in polished designs.</p>
+            </div>
+
+            <h3 id="foundation" style="margin-top: 3rem;">Foundation (2025)</h3>
             <ul>
                 <li>Established C3 information architecture for Flink section</li>
                 <li>Designed Environments and Applications management patterns</li>
                 <li>Created design system patterns for Flink resource cards, filters, and detail views</li>
             </ul>
 
-            <h3>Feature Development (2025 Q4 - 2026 Q1)</h3>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Create New Environment (unfilled).png" alt="Create new Flink environment - empty form">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Create New Environment (filled).png" alt="Create new Flink environment - filled form">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Create New Environment with defaults.png" alt="Create environment with application defaults">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Environment details (filter).png" alt="Environment details with state filter dropdown">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Application details.png" alt="Application details view showing configuration and resources">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 1rem;">Core interface patterns: Environment creation, application filtering, and detail views</p>
+
+            <h4 style="margin-top: 2rem;">Filtering & State Management</h4>
+            <p>Designed robust filtering patterns to help operators manage large fleets of applications across multiple states:</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Environment details (filter).png" alt="State filter dropdown showing all Flink application states">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Environment details (filter)-1.png" alt="Filter applied - showing initializing applications">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Environment details (filter)-2.png" alt="Filter applied - showing running applications">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Open Source Flink.png" alt="Open Source Flink landing page in Control Center">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Open Source Flink-1.png" alt="Flink section overview with environment list">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 1rem;">Multi-state filtering (Initializing, Running, Failed, Canceling, etc.) and top-level Flink navigation</p>
+
+            <h3 style="margin-top: 3rem;">Design Evolution: Create Environment Flow</h3>
+            <p>The environment creation flow evolved from a complex 4-step wizard to a simplified 2-field form with progressive disclosure for advanced settings:</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/First Version/Create New Environment.png" alt="First version - multi-step environment creation wizard">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/First Version/Create New Environment-1.png" alt="First version - step 2">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/First Version/Create New Environment-2.png" alt="First version - step 3">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/First Version/Create New Environment-3.png" alt="First version - step 4">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Create New Environment (unfilled).png" alt="Final design - simplified environment creation">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 1rem;">From multi-step wizard (first 4 screens) to streamlined single-page form (final screen)</p>
+
+            <h3 style="margin-top: 3rem;">Design Evolution: Environment & Application Details</h3>
+            <p>Environment and application detail pages went through several iterations, refining information hierarchy, tabs structure, and action patterns:</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/First Version/Open Source Flink.png" alt="First version - Open Source Flink landing page">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/First Version/Environment details.png" alt="First version - Environment details">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/First Version/Environment details-1.png" alt="First version - Environment details variant 1">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/First Version/Environment details-2.png" alt="First version - Environment details variant 2">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/First Version/Application Details.png" alt="First version - Application details">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/First Version/Application Details-1.png" alt="First version - Application details with configuration">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/First Version/Application Details-2.png" alt="First version - Application details with YAML view">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Environment details.png" alt="Final design - Environment details">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Application details.png" alt="Final design - Application details">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 1rem;">Evolution from early explorations (first 7 screens) to final polished designs (last 2 screens)</p>
+
+            <h3 id="features">Feature Development (2025 Q4 - 2026 Q1)</h3>
             <ul>
                 <li><strong>Savepoint Management:</strong> Visual savepoint workflows for disaster recovery</li>
                 <li><strong>FlinkSQL UI:</strong> Comprehensive SQL workspace with catalogs, secrets, compute pools</li>
@@ -198,6 +428,137 @@
                 <li><strong>Session Clusters:</strong> Shared compute pools for cost optimization</li>
                 <li><strong>Artifact Management:</strong> JAR/ZIP/Python file upload and management</li>
             </ul>
+
+            <h4 style="margin-top: 2rem;">Environment Management & Configuration</h4>
+            <p>Environment detail views support multiple management scenarios including filtering, editing defaults, and RBAC:</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Environment details-1.png" alt="Environment details with application list">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Environment details (edit view).png" alt="Environment edit view for updating defaults">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Environment details  (User Admin role).png" alt="Environment details with admin role permissions">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Loading page.png" alt="Loading state while environment initializes">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 1rem;">Environment detail views showing list, edit, RBAC, and loading states</p>
+
+            <h4 style="margin-top: 2rem;">Application Detail Views</h4>
+            <p>Designed comprehensive application detail pages with tabbed navigation for overview, application instances, and event logs:</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/OCC/Application details (overview).png" alt="Application overview showing resource allocation and specifications">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/OCC/Application details (Application instances).png" alt="Application instances view showing running Flink pods">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/OCC/Application details (Events log).png" alt="Events log showing application lifecycle events">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/OCC/Application details (Events log)-1.png" alt="Events log with detailed error messages">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 1rem;">Application details with Overview, Application instances, and Events log tabs</p>
+
+            <h4 style="margin-top: 2rem;">Advanced Configuration & State Management</h4>
+            <p>Designed comprehensive workflows for environment configuration defaults, application defaults, and various system states:</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Create New Environment with defaults-1.png" alt="Create environment with application defaults expanded">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Create New Environment with defaults-2.png" alt="Create environment with resource configuration">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Create New Environment with defaults-3.png" alt="Create environment with advanced settings">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Environment details-2.png" alt="Environment details - alternate view">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Environment details-3.png" alt="Environment details with expanded configuration">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Environment details-4.png" alt="Environment details with application count">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Environment details-5.png" alt="Environment details with status indicators">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Environment details (env file not added).png" alt="Environment details - empty state when no environment file added">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Loading page-1.png" alt="Loading state with progress indicator">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 1rem;">Progressive disclosure for advanced settings, multiple environment states, and empty state handling</p>
+
+            <h4 style="margin-top: 2rem;">Application Detail Variations</h4>
+            <p>Application details pages support multiple views for monitoring, configuration, and troubleshooting:</p>
+
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Application details-1.png" alt="Application details - configuration tab">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Application details-2.png" alt="Application details - resource allocation">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Application details-3.png" alt="Application details - environment variables">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/Design Handoff Screen/Application details-4.png" alt="Application details - YAML specification view">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/OCC/Application details (Application instances)(opened instance).png" alt="Application instances with expanded instance details">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/OCC/Application details (Events log)-2.png" alt="Events log with filtering options">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/OCC/Application details (Events log)-3.png" alt="Events log with error details">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/cmf/OCC/Application details (Events log)-4.png" alt="Events log with full timeline">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 1rem;">Comprehensive application monitoring with configuration, instances, and detailed event logging</p>
 
             <div class="highlight-box">
                 <h4>Design Philosophy</h4>
@@ -209,7 +570,7 @@
     <!-- Impact -->
     <section class="project-section" style="background: var(--color-card-bg);">
         <div class="container-small">
-            <h2>Program Impact</h2>
+            <h2 id="impact">Program Impact</h2>
 
             <div class="impact-grid">
                 <div class="impact-card">
@@ -247,5 +608,20 @@
 
     <script src="../js/project-protection.js"></script>
     <script src="../js/script.js"></script>
+    <script>
+        // Smooth scroll for table of contents links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
