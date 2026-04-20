@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Label Management in CP Flink - Abhilash Bhattacharjee</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .project-hero {
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.05) 0%, rgba(91, 159, 255, 0.05) 100%),
+                        radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 20px 20px;
+        }
+
+        .project-section:nth-child(even) {
+            background: #FAFAFA;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .project-section:nth-child(odd) {
+            background: white;
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.025) 0.5px, transparent 0.5px);
+            background-size: 15px 15px;
+        }
+
+        .impact-card {
+            background: white;
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        [data-theme="dark"] .project-hero {
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.08) 0%, rgba(91, 159, 255, 0.08) 100%),
+                        radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 100% 100%, 20px 20px;
+        }
+
+        [data-theme="dark"] .project-section:nth-child(even) {
+            background: #0D0D0D;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        [data-theme="dark"] .project-section:nth-child(odd) {
+            background: #121212;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0.5px, transparent 0.5px);
+            background-size: 15px 15px;
+        }
+
+        [data-theme="dark"] .impact-card {
+            background: #1A1A1A;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 20px 20px;
+            border: 1px solid #333333;
+        }
+
+        .decision-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .decision-table th {
+            background: var(--color-card-bg);
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--color-border);
+            color: var(--color-text);
+        }
+
+        .decision-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-text);
+            vertical-align: top;
+        }
+
+        .decision-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-resolved {
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        .status-open {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .scope-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .scope-grid { grid-template-columns: 1fr; }
+        }
+
+        .scope-box {
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+        }
+
+        .scope-box.in-scope {
+            border-left: 4px solid #22c55e;
+            background: rgba(34, 197, 94, 0.04);
+        }
+
+        .scope-box.out-of-scope {
+            border-left: 4px solid #ef4444;
+            background: rgba(239, 68, 68, 0.04);
+        }
+
+        [data-theme="dark"] .scope-box.in-scope {
+            background: rgba(34, 197, 94, 0.08);
+        }
+
+        [data-theme="dark"] .scope-box.out-of-scope {
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .scope-box h4 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .scope-box ul {
+            margin: 0;
+            padding-left: 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        .scope-box li {
+            margin-bottom: 0.5rem;
+            color: var(--color-text-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">Abhilash Bhattacharjee</a>
+            <div style="display: flex; align-items: center;">
+                <div class="nav-links">
+                    <a href="../index.html#work">Work</a>
+                    <a href="../index.html#about">About</a>
+                    <a href="../index.html#contact">Contact</a>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon theme-icon-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg class="theme-icon theme-icon-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <p class="breadcrumb">
+                <a href="../index.html">Home</a> / <a href="../index.html#work">Work</a> / Label Management
+            </p>
+            <h1>Label Management in CP Flink</h1>
+            <p class="hero-subtitle"><strong>Designed</strong> a comprehensive tag management, backend-powered filtering, and pagination system that <strong>eliminated a hardcoded 1,000-resource scalability cap</strong> and introduced Kubernetes-style key:value tagging across 7 resource types — <strong>unblocking UBS (200+ apps) and Medidata (1,000+ apps)</strong> from managing deployments at enterprise scale.</p>
+            <div class="project-meta-info">
+                <div class="meta-item">
+                    <span class="meta-label">Role</span>
+                    <span class="meta-value">Lead Designer</span>
+                </div>
+<div class="meta-item">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-value">In Design</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2>Table of Contents</h2>
+            <nav style="margin-top: 2rem;">
+                <ul style="margin: 0; padding-left: 0; list-style: none; border-left: 2px solid var(--color-accent); padding-left: 1.5rem;">
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#overview" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">01.</span> Overview
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#context" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">02.</span> Context & Challenge
+                        </a>
+                        <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem; list-style: none; border-left: 2px solid rgba(91, 159, 255, 0.3);">
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#personas" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">User Personas</a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#problem" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">The Problem</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#scope" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">03.</span> Design Scope
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#solution" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">04.</span> Solution Design
+                        </a>
+                        <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem; list-style: none; border-left: 2px solid rgba(91, 159, 255, 0.3);">
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#core-interaction" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">Core Tag Interaction Pattern</a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#filtering" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">Filtering, Sorting & Pagination</a>
+                            </li>
+                            <li style="padding-left: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <a href="#resource-coverage" style="color: var(--color-text); text-decoration: none; opacity: 0.8; display: block;">Resource Coverage</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#decisions" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">05.</span> Key Design Decisions
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#impact" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">06.</span> Impact
+                        </a>
+                    </li>
+                    <li style="padding-left: 1rem; margin-bottom: 1rem;">
+                        <a href="#learnings" style="color: var(--color-text); text-decoration: none; font-weight: 500; display: block;">
+                            <span style="color: var(--color-accent);">07.</span> Key Learnings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2 id="overview">Overview</h2>
+            <p>The C3 UI for CP Flink had two critical limitations that blocked enterprise adoption at scale. First, all REST API calls were <strong>hardcoded to a maximum of 1,000 resources</strong>, with all sorting and filtering performed entirely in the browser — creating silent data truncation for large deployments. Second, despite the CMF backend already supporting Kubernetes-style key:value labels, <strong>there was no label or tagging system in the UI at all</strong>.</p>
+            <p>This project addresses both: a comprehensive UI for <strong>tag management</strong>, <strong>backend-powered filtering and sorting</strong>, <strong>field projection</strong>, and <strong>pagination</strong> across all major CP Flink resource types — directly unblocking UBS (200+ apps, 50+ environments) and Medidata (1,000+ apps) who could not manage their deployments effectively through the C3 UI at their scale.</p>
+
+            <div class="image-container">
+                <img src="../images/confluent/label_management/Application/Application list page.png" alt="Application list page showing tag chips inline on each resource">
+                <p class="image-caption">Application list view with tag chips visible inline — operators see resource groupings without navigating to detail pages</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Context & Challenge -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2 id="context">Context & Challenge</h2>
+
+            <h3 id="personas">User Personas</h3>
+
+            <div class="highlight-box">
+                <div class="persona-card">
+                    <div class="persona-image">
+                        <img src="../images/confluent/Omar.png" alt="Omar the Operator">
+                    </div>
+                    <div class="persona-content">
+                        <h4 style="margin-top: 0;">Omar the Operator 📊</h4>
+                        <p><strong>Platform Admin / Cluster Admin.</strong> Omar needs to organize and find resources at scale using tags, and filter large resource lists efficiently. He manages Flink deployments for multiple teams and needs to quickly identify which applications belong to which team, filter compute pools by environment tier, and audit resource usage across business units. Without tags, every resource lookup requires scrolling through truncated lists filtered only by name.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <div class="persona-card">
+                    <div class="persona-image">
+                        <img src="../images/confluent/Dell.png" alt="Dell the Lead Developer">
+                    </div>
+                    <div class="persona-content">
+                        <h4 style="margin-top: 0;">Dell the Lead Developer 👨‍💻</h4>
+                        <p><strong>Flink Developer.</strong> Dell needs to quickly locate his applications, statements, and compute pools using name search or tag filters. He wants to tag his resources with team and project identifiers so he can filter list views to just his team's resources, and associate related resources through shared tag values.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 id="problem">The Problem</h3>
+
+            <div class="highlight-box">
+                <h4>Customer Blockers</h4>
+                <p>Two enterprise customers were specifically blocked by these limitations:</p>
+                <ul>
+                    <li><strong>UBS</strong> — 200+ apps, 50+ environments. Need: multi-environment management at scale. The 1,000-resource cap and browser-side filtering made their deployments unmanageable through the UI.</li>
+                    <li><strong>Medidata</strong> — 1,000+ apps, few environments. Need: key:value label-based resource management. Without a tagging system, organizing 1,000+ applications was impossible.</li>
+                </ul>
+            </div>
+
+            <p>Four compounding problems created this crisis:</p>
+            <ul>
+                <li><strong>Silent data truncation</strong> — The hardcoded 1,000-resource limit surfaced as incomplete resource lists with no indication to users that results were capped</li>
+                <li><strong>Browser-side performance</strong> — All sorting and filtering by resource name ran entirely in the browser, making large deployments unusable</li>
+                <li><strong>Feature parity gap</strong> — CLI and CFK already supported labels; the UI was the only surface that didn't, creating an inconsistent experience across Confluent's own tooling</li>
+                <li><strong>Competitive gap</strong> — Ververica Platform and Decodable already supported k/v label management in their UIs</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Design Scope -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2 id="scope">Design Scope</h2>
+            <p>This design requirement (INIT-14197, RFC #54.2) covers label management, backend-powered filtering/sorting, field projection, and pagination across all major CP Flink resource types in C3.</p>
+
+            <div class="scope-grid">
+                <div class="scope-box in-scope">
+                    <h4>In Scope</h4>
+                    <ul>
+                        <li>Tag CRUD (create, read, update, delete) across all supported resource types</li>
+                        <li>Tag display in list views (table column) and detail pages</li>
+                        <li>Tags in resource creation flows</li>
+                        <li>Backend-powered tag filtering with autosuggestions</li>
+                        <li>Backend-powered name search with wildcard support</li>
+                        <li>Backend-powered sorting with sortable column headers</li>
+                        <li>Pagination (replacing the hardcoded 1,000-resource limit)</li>
+                        <li>Multi-field search for Environments, Secrets, and Events</li>
+                        <li>Preserving all existing filters (status, phase, type, recency)</li>
+                        <li>K8s label validation with inline error states</li>
+                    </ul>
+                </div>
+                <div class="scope-box out-of-scope">
+                    <h4>Out of Scope</h4>
+                    <ul>
+                        <li>Artifacts — covered separately in RFC #56 / INIT-6236</li>
+                        <li>CLI changes for labels (deferred beyond Q1 2026)</li>
+                        <li>REST API v1 → v2 migration (deferred beyond Q1 2026)</li>
+                        <li>Bulk label operations (future enhancement)</li>
+                        <li>Label colors (no backend support; considered for future)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Label Format — Kubernetes Semantics</h4>
+                <p>Tags follow Kubernetes conventions: <strong>key</strong> (≤63 chars, alphanumeric start/end, optional DNS prefix up to 253 chars) + optional <strong>value</strong> (≤63 chars). Examples of real-world use cases:</p>
+                <ul>
+                    <li><code>team: datascience</code> — organize by team ownership</li>
+                    <li><code>environment: production</code> — distinguish prod vs staging vs dev</li>
+                    <li><code>cost-center: CC-4521</code> — map to billing/cost centers</li>
+                    <li><code>platform.confluent.io/owner: analytics-team</code> — prefixed key (K8s DNS subdomain convention)</li>
+                    <li><code>temporary</code> — key-only, acts like a simple boolean tag</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2 id="solution">Solution Design</h2>
+
+            <h3 id="core-interaction">Core Tag Interaction Pattern</h3>
+            <p>Tag management is built around a <strong>consistent slide panel</strong> that appears identically across all resource types. Operators add tags using key-value pairs, with real-time Kubernetes validation, duplicate detection, autosuggestions from recently used keys/values, and toast notifications confirming every action.</p>
+
+            <div class="highlight-box">
+                <h4>Autosuggestion Strategy</h4>
+                <p>The slide panel fetches suggested tag keys and values from the <strong>200 most recently updated resources</strong> via the projection API (<code>?fields=metadata.labels&size=200</code>). Key:value pairs are collected into a multimap for typeahead/autocomplete in both Key and Value fields. With 500+ resources, not all possible label values will be shown — this is a best-effort approach.</p>
+            </div>
+
+            <h4 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--color-text);">Adding Tags</h4>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Add tags to any resource/Slide Panel.png" alt="Tag slide panel — initial state">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Add tags to any resource/Slide Panel-1.png" alt="Tag slide panel — key-value entry in progress">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Add tags to any resource/Slide Panel-2.png" alt="Tag slide panel — multiple tags added">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Add tag slide panel — initial state, key-value entry, K8s validation, duplicate detection, tooltips, and success notifications. Key field is <strong>read-only after creation</strong> (label keys are immutable once set).</p>
+
+            <h4 style="margin-top: 3rem; margin-bottom: 1rem; color: var(--color-text);">Editing Tags</h4>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Edit tags to any resource/Slide Panel.png" alt="Edit tags panel — existing tags loaded">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Edit tags to any resource/Slide Panel-1.png" alt="Edit tags panel — modifying a tag value">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Edit tags to any resource/Slide Panel-2.png" alt="Edit tags panel — removing a tag">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Edit tags — same slide panel, key field read-only (immutable), value field editable. Resources that don't support updates (Savepoints) show tags as read-only after creation.</p>
+
+            <h4 style="margin-top: 3rem; margin-bottom: 1rem; color: var(--color-text);">Viewing All Tags</h4>
+            <div class="image-container">
+                <img src="../images/confluent/label_management/View complete tags for any resource/Option 2_ Show only the previous tags created by te user.png" alt="Complete tags view — all tags applied to a resource">
+                <p class="image-caption">Overflow tag display — list views show a +N indicator when a resource has more tags than fit in the cell; clicking reveals the full tag set</p>
+            </div>
+
+            <h3 id="filtering" style="margin-top: 3rem;">Filtering, Sorting & Pagination</h3>
+            <p>Beyond tags, this project moves all filtering and sorting from the browser to the backend — and replaces the hardcoded 1,000-resource cap with proper pagination. Every list view gains backend-powered capabilities.</p>
+
+            <div class="highlight-box">
+                <h4>Filter Combination Logic</h4>
+                <ul>
+                    <li><strong>Boolean AND</strong> — all tag filters, name search, and existing status/phase filters combine using AND</li>
+                    <li><strong>OR</strong> is supported only within multi-field search (Environments, Secrets, Events)</li>
+                    <li><strong>Set-based filters</strong> (<code>in</code>, <code>notin</code>) provide OR within a single label key</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Tag Filter Syntax (User-Facing)</h4>
+                <p>Users don't type raw filter syntax — the UI provides visual filter controls (dropdowns, chips) that translate to the <code>?filter=</code> query parameter behind the scenes:</p>
+                <ul>
+                    <li><code>environment = production</code> — equality: label key "environment" equals "production"</li>
+                    <li><code>tier != frontend</code> — inequality: label key "tier" is not "frontend"</li>
+                    <li><code>environment in (production, qa)</code> — set inclusion: environment is "production" OR "qa"</li>
+                    <li><code>partition</code> — existence: resource has a tag with key "partition"</li>
+                    <li><code>!partition</code> — non-existence: resource does NOT have key "partition"</li>
+                    <li><code>region in (aws-*, azure-us-east2)</code> — wildcard matching on values</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Multi-Field Search</h4>
+                <ul>
+                    <li><strong>Environments:</strong> searches across <code>name</code> AND <code>kubernetesNamespace</code> (OR logic)</li>
+                    <li><strong>Secrets:</strong> searches across <code>name</code> AND <code>status.environments</code> (OR logic)</li>
+                    <li><strong>Events:</strong> searches across <code>status.message</code> AND <code>metadata.flinkApplicationInstance</code> (OR logic)</li>
+                    <li>Multi-field search combines with tag filters via AND logic</li>
+                </ul>
+            </div>
+
+            <h3 id="resource-coverage" style="margin-top: 3rem;">Resource Coverage</h3>
+            <p>Tags and the new filtering/sorting/pagination capabilities apply to all 7 major CP Flink resource types. Each resource has different constraints — notably, Compute Pool tag editing is pending backend support (CF-1688), and Savepoints have limited tag support until a details page exists.</p>
+
+            <h4 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--color-text);">Applications — List View</h4>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Application/Application list page.png" alt="Application list page — base view">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Application/Application list page - adding new tags for a specific application resource (few tags were added earlier for this resource).png" alt="Application list — adding tags with existing tags present">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Application/Application list page - adding new tags for a specific application resource on top of the earlier added tags.png" alt="Application list — adding more tags on top of existing">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Application/Application list page - adding new tags for a specific application resource (expanding to see the earlier added tags).png" alt="Application list — expanding to see all tags on a resource">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Application/Application list page - view all the tags against a specific resource.png" alt="Application list — view all tags for a resource">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Application list view — tag chips inline, expandable overflow, backend sorting by name / namespace / specUpdatedTime / createdTime</p>
+
+            <h4 style="margin-top: 3rem; margin-bottom: 1rem; color: var(--color-text);">Applications — Detail View</h4>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Application/Application details - empty state (no tags).png" alt="Application detail — empty tag state">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Application/Application details - open slide panel while adding the first tag.png" alt="Application detail — slide panel open for first tag">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Application/Application details (with 1 tag).png" alt="Application detail — one tag applied">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Application/Application details (with 2 tags).png" alt="Application detail — two tags applied">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Application/User story.png" alt="Application label management user story flow">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Application detail page — chips in header/metadata area with dismiss (×) button per chip; "+ Add tags" triggers slide panel</p>
+
+            <h4 style="margin-top: 3rem; margin-bottom: 1rem; color: var(--color-text);">Compute Pools</h4>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Compute pools/Compute pool list view.png" alt="Compute pool list view with tags">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Compute pools/Compute pool list view with opened tag filters.png" alt="Compute pool list — tag filter dropdown open">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Compute pools/Compute Pool - Create (With advanced view).png" alt="Compute pool creation form with label fields in advanced section">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Compute pools/User story.png" alt="Compute pool label management user story">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Compute pools — tag filter dropdown and sortable columns. Note: tag edit/delete is pending backend support (CF-1688, targeting CMF 2.3 / April 2026) — design includes full edit flow gated behind backend availability check</p>
+
+            <h4 style="margin-top: 3rem; margin-bottom: 1rem; color: var(--color-text);">Environments</h4>
+            <div class="image-container">
+                <img src="../images/confluent/label_management/Environments/Listing page of all Flink environments.png" alt="Environments list page with tags">
+                <p class="image-caption">Environments list — multi-field search (name + kubernetesNamespace), sortable by name and activeCount. Tags column with filter dropdown</p>
+            </div>
+            <div class="image-container" style="margin-top: 2rem;">
+                <img src="../images/confluent/label_management/Environments/Env Details - Day 'N'.png" alt="Environment detail page showing tags">
+                <p class="image-caption">Environment detail page — tags in header area with inline edit access; labels can be set during environment creation</p>
+            </div>
+
+            <h4 style="margin-top: 3rem; margin-bottom: 1rem; color: var(--color-text);">Catalogs</h4>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Catalogs/Catalog list view with multiple tags.png" alt="Catalog list view with multiple tags applied">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Catalogs/Apply tags to the catalog when viewed from a specific CP Flink environment.png" alt="Adding tags to a catalog from within an environment context">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Catalogs/Details of catalog - User adding a tag.png" alt="Catalog detail page — user adding a tag">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Catalogs — tags work within environment-scoped views, maintaining context-awareness across the resource hierarchy</p>
+
+            <h4 style="margin-top: 3rem; margin-bottom: 1rem; color: var(--color-text);">Secrets</h4>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Secrets/Secrets - Lists.png" alt="Secrets list page with tags">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Secrets/%5BNew%5DSecret details page.png" alt="Secret detail page with tags section">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../images/confluent/label_management/Secrets/%5BNew%5DSecret details page-1.png" alt="Secret detail page — tag management in progress">
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev" aria-label="Previous slide">←</button>
+                    <button class="carousel-button carousel-button-next" aria-label="Next slide">→</button>
+                    <div class="carousel-indicators"></div>
+                </div>
+            </div>
+            <p class="image-caption" style="text-align: center; margin-top: 1rem;">Secrets — multi-field search across name + status.environments; tags identify ownership without exposing secret values</p>
+
+            <h4 style="margin-top: 3rem; margin-bottom: 1rem; color: var(--color-text);">Statements</h4>
+            <div class="image-container">
+                <img src="../images/confluent/label_management/Statement/Statement listing page.png" alt="Statements list with tags">
+                <p class="image-caption">Statement list — sortable by name / creationTimestamp / updateTimestamp; tag filter + existing Phase filter preserved</p>
+            </div>
+            <div class="image-container" style="margin-top: 2rem;">
+                <img src="../images/confluent/label_management/Statement/Statement with 2 tags.png" alt="Statement with 2 tags applied">
+                <p class="image-caption">Statement with tags applied — label chips visible inline on both list and detail views</p>
+            </div>
+
+            <h4 style="margin-top: 3rem; margin-bottom: 1rem; color: var(--color-text);">Savepoints</h4>
+            <div class="image-container">
+                <img src="../images/confluent/label_management/Attached savepoints/Attached savepoints listing page.png" alt="Attached savepoints list with tags">
+                <p class="image-caption">Attached savepoints — tag display possible if a details page exists; sortable by name and creationTimestamp</p>
+            </div>
+            <div class="image-container" style="margin-top: 2rem;">
+                <img src="../images/confluent/label_management/Detached savepoints/Detached savepoints landing page.png" alt="Detached savepoints landing page with tags">
+                <p class="image-caption">Detached savepoints — tags supported on list and detail views; edit/delete not supported (no backend update support for savepoints)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Design Decisions -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2 id="decisions">Key Design Decisions</h2>
+            <p>Several significant decisions were resolved during the design requirements phase. These are recorded here for future reference.</p>
+
+            <table class="decision-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Question</th>
+                        <th>Decision & Rationale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Should the UI use "Labels" or "Tags"?</td>
+                        <td><span class="status-resolved">RESOLVED</span> — Use <strong>"Tags"</strong>. Ensures consistency with Confluent Cloud UI, which already uses "Tags" for resource metadata. The backend API uses <code>metadata.labels</code> but the UI-facing term prioritizes cross-product consistency for users who work across both CC and CP. The backend field name remains unchanged; this is a UI display-only decision.</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Should label colors be supported in V1?</td>
+                        <td><span class="status-resolved">RESOLVED — No</span>. Multiple colors will not be supported. Confirmed by Robert Metzger (Backend Lead). No backend support exists; parked for a future release.</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Should bulk label operations (apply tag to multiple resources) be supported?</td>
+                        <td><span class="status-resolved">RESOLVED — No</span>. Not in RFC scope; will not be supported in V1.</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Should the slide panel be reusable across all resource types or customized per resource?</td>
+                        <td><span class="status-resolved">RESOLVED — Yes, reusable</span>. One slide panel design serves all resource types. Context is provided by the panel title: "Add Tag for &lt;resource-name&gt;" / "Edit Tag for &lt;resource-name&gt;".</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Can we edit/delete tags for Compute Pools? Backend update support is pending (CF-1688).</td>
+                        <td><span class="status-open">OPEN — Recommendation</span>: Design the full edit/delete flow now and gate it behind a backend availability check. CMF 2.3 should land before C3 2.6 (June). Add a feature flag note for the C3 frontend team.</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>How should the filter bar scale when both tag filters and existing filters are shown?</td>
+                        <td><span class="status-open">OPEN</span> — Consider a unified filter bar with categorized dropdowns.</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>How do we communicate wildcard search syntax to users?</td>
+                        <td><span class="status-open">OPEN — Proposal</span>: Placeholder text + tooltip/info icon (e.g., placeholder "Search by name or namespace...").</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>How do we handle invalid label key/value typed in the filter?</td>
+                        <td><span class="status-open">OPEN — Proposal</span>: Show inline validation error and prevent filter submission.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <h2 id="impact">Impact</h2>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>Unblocked Enterprise Customers</h4>
+                    <p><strong>Directly unblocked</strong> UBS (200+ apps, 50+ environments) and Medidata (1,000+ apps) — the two enterprise customers explicitly blocked by the 1,000-resource cap and lack of tagging. <strong>Enabled</strong> effective deployment management through the C3 UI at their scale.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Eliminated the 1,000-Resource Cap</h4>
+                    <p><strong>Replaced</strong> hardcoded browser-side limits with backend-powered pagination and sorting, <strong>ending</strong> silent data truncation. Users now see complete resource lists with clear pagination controls — no more invisible caps on enterprise deployments.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>7 Resource Types, One Interaction</h4>
+                    <p><strong>Delivered</strong> tag management across all major CP Flink resource types using a single reusable slide panel, <strong>eliminating</strong> per-resource learning curves. Operators familiar with tagging one resource type immediately know how to tag any other.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>Closed Three Gaps at Once</h4>
+                    <p><strong>Achieved</strong> feature parity with CLI/CFK (which already supported labels), <strong>matched</strong> competitor UI capabilities (Ververica, Decodable), and <strong>unified</strong> terminology with Confluent Cloud — resolving a feature parity gap, a competitive gap, and an internal consistency gap simultaneously.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learnings -->
+    <section class="project-section">
+        <div class="container-small">
+            <h2 id="learnings">Key Learnings</h2>
+
+            <h3>Scalability Is a Design Problem, Not Just an Engineering Problem</h3>
+            <p>The 1,000-resource cap was an engineering decision but its most visible impact was UX — users saw truncated lists with no indication that results were capped. Silent data truncation is a design failure. Surfacing honest system limits (or removing them via pagination) is as much a design responsibility as the interaction model.</p>
+
+            <h3>Terminology Decisions Have Long-Term Costs</h3>
+            <p>The "Labels" vs "Tags" debate revealed how terminology misalignment between backend APIs, CLI tooling, and UI creates lasting confusion for users who work across surfaces. The decision to use "Tags" in the UI (matching Confluent Cloud) while leaving the API field name as <code>metadata.labels</code> was pragmatic — prioritizing cross-product consistency over technical purity.</p>
+
+            <div class="highlight-box">
+                <h4>Design Insight</h4>
+                <p>The most important design decision in this project wasn't about interaction patterns — it was deciding to scope all 7 resource types into a single release rather than incrementally. Tags only deliver organizational value when they're present everywhere. A partial rollout would have created a patchwork where some resources are taggable and others aren't, forcing users to maintain two organizational systems simultaneously. Consistency at launch was the right call.</p>
+            </div>
+
+            <h3>Backend Dependency Risk Management</h3>
+            <p>The Compute Pool tag editing situation (pending CF-1688) led to the approach of designing the full edit/delete flow and gating it behind a backend availability check rather than shipping a read-only-only design. Designing ahead of the backend ensures the full experience is ready when the API is, and avoids two separate design and engineering cycles.</p>
+        </div>
+    </section>
+
+    <!-- Back Navigation -->
+    <section class="project-section" style="background: var(--color-card-bg);">
+        <div class="container-small">
+            <a href="../index.html#work" class="back-link">← Back to all projects</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Abhilash Bhattacharjee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/project-protection.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
